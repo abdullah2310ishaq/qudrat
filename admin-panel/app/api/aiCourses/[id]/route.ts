@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import AICourse from '@/lib/db/models/AICourse';
-import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import AILesson from '@/lib/db/models/AILesson'; // Import to ensure model is registered for populate
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Prompt from '@/lib/db/models/Prompt'; // Import to ensure model is registered for populate
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Certificate from '@/lib/db/models/Certificate'; // Import to ensure model is registered for populate
 
 // GET /api/aiCourses/:id - Fetch single AI mastery course
@@ -49,7 +52,23 @@ export async function PUT(
     const { id } = await params;
 
     const body = await request.json();
-    const aiCourse = await AICourse.findByIdAndUpdate(id, body, {
+    
+    // Clean up empty strings for optional ObjectId fields
+    const updateData: Record<string, unknown> = { ...body };
+    if (updateData.certificateId === '' || updateData.certificateId === null) {
+      updateData.certificateId = undefined;
+    }
+    if (updateData.category === '') {
+      updateData.category = undefined;
+    }
+    if (updateData.subHeading === '') {
+      updateData.subHeading = undefined;
+    }
+    if (updateData.coverImage === '') {
+      updateData.coverImage = undefined;
+    }
+    
+    const aiCourse = await AICourse.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
     });

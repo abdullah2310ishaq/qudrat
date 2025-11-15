@@ -153,15 +153,25 @@ export default function NewAICoursePage() {
     setLoading(true);
 
     try {
+      // Clean up empty strings for optional fields
+      const submitData = {
+        ...formData,
+        certificateId: formData.certificateId || undefined,
+        category: formData.category || undefined,
+        subHeading: formData.subHeading || undefined,
+        coverImage: formData.coverImage || undefined,
+      };
+      
       const res = await fetch('/api/aiCourses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       const data = await res.json();
       if (data.success) {
-        router.push('/dashboard/ai-courses');
+        // Redirect to add lessons page so user can immediately create lessons
+        router.push(`/dashboard/ai-courses/${data.data._id}/add-lessons`);
       } else {
         alert('Error creating AI course: ' + data.error);
       }
@@ -359,25 +369,17 @@ export default function NewAICoursePage() {
                           <label className="block text-sm font-medium text-white mb-2">
                             Select Lessons for this Level
                           </label>
-                          <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border rounded p-2">
-                            {lessons.map((lesson) => (
-                              <label
-                                key={lesson._id}
-                                className="flex items-center space-x-2 cursor-pointer hover:bg-zinc-700 p-1 rounded text-white"
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={level.lessons.includes(lesson._id)}
-                                  onChange={() => toggleLessonInLevel(index, lesson._id)}
-                                  className="h-4 w-4 text-indigo-600"
-                                />
-                                <span className="text-sm">{lesson.title}</span>
-                              </label>
-                            ))}
+                          <div className="border rounded p-4 bg-zinc-900 border-zinc-700">
+                            <p className="text-sm text-zinc-400 mb-2">
+                              💡 Lessons will be added after creating the AI course. You can add lessons from the course edit page.
+                            </p>
+                            <p className="text-xs text-zinc-500">
+                              After creating this course, go to "Add Lessons" to create lessons specifically for this AI Mastery Path.
+                            </p>
                           </div>
                           {level.lessons.length > 0 && (
-                            <p className="text-xs text-zinc-400 mt-1">
-                              {level.lessons.length} lesson(s) selected
+                            <p className="text-xs text-zinc-400 mt-2">
+                              {level.lessons.length} lesson ID(s) will be assigned (add lessons after course creation)
                             </p>
                           )}
                         </div>

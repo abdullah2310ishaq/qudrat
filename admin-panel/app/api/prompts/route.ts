@@ -10,14 +10,50 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const tool = searchParams.get('tool');
     const category = searchParams.get('category');
+    const application = searchParams.get('application');
+    const search = searchParams.get('search');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
 
-    const query: Record<string, string> = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const query: Record<string, any> = {};
     if (tool) query.tool = tool;
     if (category) query.category = category;
+    if (application) query.application = application;
 
-    const prompts = await Prompt.find(query).sort({ createdAt: -1 });
+    // Add search functionality
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { subHeading: { $regex: search, $options: 'i' } },
+        { application: { $regex: search, $options: 'i' } },
+        { prompt: { $regex: search, $options: 'i' } },
+      ];
+    }
 
-    return NextResponse.json({ success: true, data: prompts }, { status: 200 });
+    // Calculate pagination
+    const skip = (page - 1) * limit;
+    const total = await Prompt.countDocuments(query);
+
+    const prompts = await Prompt.find(query)
+      .populate('relatedCourseId')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: prompts,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        },
+      },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
@@ -33,7 +69,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-    const { category, prompt, tool, title, subHeading, tags, relatedCourseId } = body;
+    const { category, application, prompt, tool, title, subHeading, tags, relatedCourseId } = body;
 
     if (!category || !prompt || !tool || !title || !subHeading) {
       return NextResponse.json(
@@ -44,6 +80,7 @@ export async function POST(request: NextRequest) {
 
     const newPrompt = await Prompt.create({
       category,
+      application: application || undefined,
       prompt,
       tool,
       title,

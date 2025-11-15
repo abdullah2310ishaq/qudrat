@@ -7,7 +7,7 @@ interface Course {
   _id: string;
   title: string;
   heading: string;
-  type: 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested';
+  type: 'simple' | 'challenge';
   category: string;
   isActive: boolean;
   lessons?: Array<{ _id: string }> | string[];
@@ -143,9 +143,7 @@ export default function CoursesPage() {
                 >
                   <option value="">All Types</option>
                   <option value="simple">Simple</option>
-                  <option value="mastery-path">Mastery Path</option>
                   <option value="challenge">Challenge</option>
-                  <option value="prompt-suggested">Prompt-Suggested</option>
                 </select>
               </div>
               <div>
@@ -218,7 +216,7 @@ export default function CoursesPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-800 text-white border border-zinc-700">
-                      {course.type === 'mastery-path' ? 'Mastery Path' : course.type === 'challenge' ? 'Challenge' : course.type === 'prompt-suggested' ? 'Prompt-Suggested' : 'Simple'}
+                      {course.type === 'challenge' ? 'Challenge' : 'Simple'}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300 font-medium">

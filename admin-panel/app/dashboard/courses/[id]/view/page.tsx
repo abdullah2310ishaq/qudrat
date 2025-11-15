@@ -28,7 +28,7 @@ interface Course {
   title: string;
   heading: string;
   subHeading?: string;
-  type: 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested';
+  type: 'simple' | 'challenge';
   category: string;
   photo?: string;
   isActive: boolean;
@@ -153,10 +153,7 @@ export default function ViewCoursePage() {
                 <div>
                   <label className="text-sm text-zinc-400">Course Type</label>
                   <p className="text-white font-semibold">
-                    {course.type === 'mastery-path' ? 'Mastery Path' : 
-                     course.type === 'challenge' ? 'Challenge' : 
-                     course.type === 'prompt-suggested' ? 'Prompt-Suggested' : 
-                     'Simple Course'}
+                    {course.type === 'challenge' ? 'Challenge' : 'Simple Course'}
                   </p>
                 </div>
                 <div>

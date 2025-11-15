@@ -79,6 +79,29 @@ export default function CertificatesPage() {
     }
   };
 
+  const seedTemplates = async () => {
+    if (!confirm('This will create 4 beautiful Qudrat Academy certificate templates. Continue?')) {
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/certificate-templates/seed', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`Successfully created ${data.data.length} certificate templates!`);
+        fetchTemplates();
+      } else {
+        alert('Error: ' + data.error);
+      }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Error seeding templates:', errorMessage);
+      alert('Error creating templates: ' + errorMessage);
+    }
+  };
+
   return (
     <div className="p-8 bg-black">
       <div className="flex justify-between items-center mb-8">
@@ -86,12 +109,20 @@ export default function CertificatesPage() {
           <h1 className="text-4xl font-bold text-white mb-2">Certificate Templates</h1>
           <p className="text-zinc-400">Manage certificate templates for courses</p>
         </div>
-        <Link
-          href="/dashboard/certificates/new"
-          className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
-        >
-          + Create Template
-        </Link>
+        <div className="flex gap-3">
+          <button
+            onClick={seedTemplates}
+            className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+          >
+            🌟 Seed Qudrat Academy Templates
+          </button>
+          <Link
+            href="/dashboard/certificates/new"
+            className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+          >
+            + Create Template
+          </Link>
+        </div>
       </div>
 
       {loading ? (

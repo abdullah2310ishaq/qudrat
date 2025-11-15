@@ -15,7 +15,7 @@ interface Course {
   title: string;
   heading: string;
   subHeading?: string;
-  type: 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested';
+  type: 'simple' | 'challenge';
   category: string;
   isActive: boolean;
   lessons?: Lesson[] | string[];
@@ -182,14 +182,12 @@ export default function EditCoursePage() {
               required
               value={formData.type}
               onChange={(e) =>
-                setFormData({ ...formData, type: e.target.value as 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested' })
+                setFormData({ ...formData, type: e.target.value as 'simple' | 'challenge' })
               }
               className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
             >
               <option value="simple">Simple Course</option>
-              <option value="mastery-path">Mastery Path (AI Course)</option>
               <option value="challenge">Challenge Course</option>
-              <option value="prompt-suggested">Prompt-Suggested Course</option>
             </select>
           </div>
 

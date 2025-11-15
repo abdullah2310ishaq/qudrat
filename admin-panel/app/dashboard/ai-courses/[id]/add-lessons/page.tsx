@@ -21,7 +21,7 @@ interface LessonFormData {
   }>;
 }
 
-interface Course {
+interface AICourse {
   _id: string;
   title: string;
 }
@@ -29,31 +29,31 @@ interface Course {
 export default function AddLessonsPage() {
   const router = useRouter();
   const params = useParams();
-  const courseId = params.id as string;
+  const aiCourseId = params.id as string;
 
-  const [course, setCourse] = useState<Course | null>(null);
+  const [aiCourse, setAiCourse] = useState<AICourse | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lessons, setLessons] = useState<LessonFormData[]>([]);
 
   useEffect(() => {
-    fetchCourse();
-  }, [courseId]);
+    fetchAICourse();
+  }, [aiCourseId]);
 
-  const fetchCourse = async () => {
+  const fetchAICourse = async () => {
     try {
-      const res = await fetch(`/api/courses/${courseId}`);
+      const res = await fetch(`/api/aiCourses/${aiCourseId}`);
       const data = await res.json();
       if (data.success) {
-        setCourse(data.data);
+        setAiCourse(data.data);
       } else {
-        alert('Course not found');
-        router.push('/dashboard/courses');
+        alert('AI Course not found');
+        router.push('/dashboard/ai-courses');
       }
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Error fetching course:', errorMessage);
-      alert('Error loading course');
+      console.error('Error fetching AI course:', errorMessage);
+      alert('Error loading AI course');
     } finally {
       setLoading(false);
     }
@@ -153,11 +153,11 @@ export default function AddLessonsPage() {
           .map((p) => p.trim())
           .filter((p) => p.length > 0);
 
-        const res = await fetch('/api/lessons', {
+        const res = await fetch('/api/aiLessons', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            courseId,
+            aiCourseId,
             title: lesson.title,
             content: lesson.content,
             media: mediaArray,
@@ -177,33 +177,10 @@ export default function AddLessonsPage() {
         return data.data._id;
       });
 
-      const lessonIds = await Promise.all(lessonPromises);
+      await Promise.all(lessonPromises);
 
-      // Get existing course to preserve existing lessons
-      const courseRes = await fetch(`/api/courses/${courseId}`);
-      const courseData = await courseRes.json();
-      const existingLessons = courseData.success && courseData.data.lessons 
-        ? courseData.data.lessons.map((l: { _id?: string; toString?: () => string }) => l._id || l.toString?.() || '')
-        : [];
-
-      // Merge existing lessons with new ones (avoid duplicates)
-      const allLessonIds = [...new Set([...existingLessons, ...lessonIds])];
-
-      // Update course with all lesson IDs
-      const updateRes = await fetch(`/api/courses/${courseId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          lessons: allLessonIds,
-        }),
-      });
-
-      if (!updateRes.ok) {
-        throw new Error('Failed to update course with lessons');
-      }
-
-      alert(`Successfully created ${lessons.length} lesson(s)!`);
-      router.push(`/dashboard/courses/${courseId}`);
+      alert(`Successfully created ${lessons.length} lesson(s) for AI Course!`);
+      router.push(`/dashboard/ai-courses/${aiCourseId}`);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('Error creating lessons:', errorMessage);
@@ -226,8 +203,8 @@ export default function AddLessonsPage() {
   return (
     <div className="p-8 bg-black">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Add Lessons to Course</h1>
-        <p className="text-zinc-400">Course: {course?.title}</p>
+        <h1 className="text-4xl font-bold text-white mb-2">Add Lessons to AI Mastery Course</h1>
+        <p className="text-zinc-400">AI Course: {aiCourse?.title}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-4xl">
@@ -446,7 +423,7 @@ export default function AddLessonsPage() {
             {saving ? 'Creating Lessons...' : `Create ${lessons.length} Lesson(s)`}
           </button>
           <Link
-            href={`/dashboard/courses/${courseId}`}
+            href={`/dashboard/ai-courses/${aiCourseId}`}
             className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
           >
             Skip for Now

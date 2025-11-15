@@ -7,7 +7,7 @@ interface Prompt {
   _id: string;
   title: string;
   subHeading: string;
-  category: 'Life' | 'Business' | 'Creativity' | 'Work';
+  category: 'basic_applications' | 'productivity' | 'sales' | 'ecommerce' | 'investing' | 'web_dev' | 'customer_support' | 'cro' | 'daily_life' | 'tech' | 'education';
   tool: string;
   prompt: string;
   tags: string[];
@@ -101,10 +101,17 @@ export default function PromptsPage() {
           className="px-4 py-2 border border-zinc-700 rounded-xl bg-zinc-800 text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
         >
           <option value="">All Categories</option>
-          <option value="Life">Life</option>
-          <option value="Business">Business</option>
-          <option value="Creativity">Creativity</option>
-          <option value="Work">Work</option>
+          <option value="basic_applications">Basic Applications</option>
+          <option value="productivity">Productivity</option>
+          <option value="sales">Sales</option>
+          <option value="ecommerce">E-commerce</option>
+          <option value="investing">Investing</option>
+          <option value="web_dev">Web Development</option>
+          <option value="customer_support">Customer Support</option>
+          <option value="cro">Conversion Rate Optimization</option>
+          <option value="daily_life">Daily Life</option>
+          <option value="tech">Tech</option>
+          <option value="education">Education</option>
         </select>
         <button
           onClick={() => setFilter({ tool: '', category: '' })}

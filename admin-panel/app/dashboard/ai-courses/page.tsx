@@ -44,6 +44,26 @@ export default function AICoursesPage() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this AI Mastery Path? This action cannot be undone.')) return;
+
+    try {
+      const res = await fetch(`/api/aiCourses/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchAICourses();
+      } else {
+        alert('Error deleting AI course: ' + data.error);
+      }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Error deleting AI course:', errorMessage);
+      alert('Error deleting AI course: ' + errorMessage);
+    }
+  };
+
   return (
     <div className="p-8 bg-black">
       <div className="flex justify-between items-center mb-8">
@@ -107,13 +127,25 @@ export default function AICoursesPage() {
                   {course.tree?.length || 0} Level{course.tree?.length !== 1 ? 's' : ''}
                 </span>
               </div>
-              <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+              <div className="flex items-center gap-2 pt-4 border-t border-zinc-800">
                 <Link
                   href={`/dashboard/ai-courses/${course._id}`}
-                  className="text-white hover:text-zinc-300 text-sm font-semibold hover:underline"
+                  className="flex-1 text-center px-3 py-2 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all text-xs font-semibold border border-zinc-700"
                 >
                   Edit
                 </Link>
+                <Link
+                  href={`/dashboard/ai-courses/${course._id}/add-lessons`}
+                  className="flex-1 text-center px-3 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all text-xs font-semibold"
+                >
+                  Lessons
+                </Link>
+                <button
+                  onClick={() => handleDelete(course._id)}
+                  className="px-3 py-2 bg-zinc-800 text-red-400 border border-red-400/30 rounded-xl hover:bg-red-400/10 transition-all text-xs font-semibold"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

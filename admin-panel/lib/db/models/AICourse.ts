@@ -13,7 +13,7 @@ export interface IAICourse extends Document {
   title: string;
   heading: string;
   subHeading?: string;
-  type: 'mastery-path';
+  type: 'mastery';
   aiTool: string; // ChatGPT, MidJourney, DALL-E, Jasper AI, etc.
   category?: string; // Optional category/tags
   coverImage?: string; // Base64 encoded cover image/icon (optional)
@@ -39,8 +39,8 @@ const AICourseSchema = new Schema<IAICourse>(
     },
     type: {
       type: String,
-      enum: ['mastery-path'],
-      default: 'mastery-path',
+      enum: ['mastery'],
+      default: 'mastery',
     },
     aiTool: {
       type: String,
@@ -65,7 +65,7 @@ const AICourseSchema = new Schema<IAICourse>(
         lessons: [
           {
             type: Schema.Types.ObjectId,
-            ref: 'Lesson',
+            ref: 'AILesson',
           },
         ],
         canRead: {

@@ -22,11 +22,7 @@ export default function NewChallengePage() {
       const res = await fetch('/api/challenges', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          lessons: [],
-          interactiveQuestions: [],
-        }),
+        body: JSON.stringify(formData),
       });
 
       const data = await res.json();

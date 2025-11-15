@@ -7,7 +7,8 @@ interface Prompt {
   _id: string;
   title: string;
   subHeading: string;
-  category: 'Life' | 'Business' | 'Creativity' | 'Work';
+  category: 'basic_applications' | 'productivity' | 'sales' | 'ecommerce' | 'investing' | 'web_dev' | 'customer_support' | 'cro' | 'daily_life' | 'tech' | 'education';
+  application?: string;
   tool: string;
   prompt: string;
   tags: string[];
@@ -24,7 +25,8 @@ export default function EditPromptPage() {
     _id: '',
     title: '',
     subHeading: '',
-    category: 'Life',
+    category: 'basic_applications',
+    application: '',
     tool: '',
     prompt: '',
     tags: [],
@@ -146,16 +148,37 @@ export default function EditPromptPage() {
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  category: e.target.value as 'Life' | 'Business' | 'Creativity' | 'Work',
+                  category: e.target.value as 'basic_applications' | 'productivity' | 'sales' | 'ecommerce' | 'investing' | 'web_dev' | 'customer_support' | 'cro' | 'daily_life' | 'tech' | 'education',
                 })
               }
               className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
             >
-              <option value="Life">Life</option>
-              <option value="Business">Business</option>
-              <option value="Creativity">Creativity</option>
-              <option value="Work">Work</option>
+              <option value="basic_applications">Basic Applications</option>
+              <option value="productivity">Productivity</option>
+              <option value="sales">Sales</option>
+              <option value="ecommerce">E-commerce</option>
+              <option value="investing">Investing</option>
+              <option value="web_dev">Web Development</option>
+              <option value="customer_support">Customer Support</option>
+              <option value="cro">Conversion Rate Optimization</option>
+              <option value="daily_life">Daily Life</option>
+              <option value="tech">Tech</option>
+              <option value="education">Education</option>
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Application <span className="text-zinc-400 text-xs">(Optional - Sub-category/Application name)</span>
+            </label>
+            <input
+              type="text"
+              value={formData.application || ''}
+              onChange={(e) => setFormData({ ...formData, application: e.target.value })}
+              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              placeholder="e.g., Leveraging Customer Data Analytics"
+            />
+            <p className="text-xs text-zinc-400 mt-1">Leave empty if prompt is directly under category</p>
           </div>
 
           <div>

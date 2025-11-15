@@ -7,9 +7,8 @@ export interface IQuestion {
   explanation?: string;
 }
 
-export interface ILesson extends Document {
-  courseId?: mongoose.Types.ObjectId; // For simple courses
-  aiCourseId?: mongoose.Types.ObjectId; // For AI mastery courses
+export interface IAILesson extends Document {
+  aiCourseId: mongoose.Types.ObjectId; // For AI mastery courses only
   title: string;
   content: string;
   media?: string[]; // External URLs (optional)
@@ -23,15 +22,12 @@ export interface ILesson extends Document {
   updatedAt: Date;
 }
 
-const LessonSchema = new Schema<ILesson>(
+const AILessonSchema = new Schema<IAILesson>(
   {
-    courseId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Course',
-    },
     aiCourseId: {
       type: Schema.Types.ObjectId,
       ref: 'AICourse',
+      required: true,
     },
     title: {
       type: String,
@@ -92,15 +88,5 @@ const LessonSchema = new Schema<ILesson>(
   }
 );
 
-// Custom validator: At least one of courseId or aiCourseId must be present
-LessonSchema.pre('save', function (next) {
-  // Ensure at least one of courseId or aiCourseId is present
-  if (!this.courseId && !this.aiCourseId) {
-    const error = new Error('Either courseId or aiCourseId is required');
-    return next(error);
-  }
-  next();
-});
-
-export default mongoose.models.Lesson || mongoose.model<ILesson>('Lesson', LessonSchema);
+export default mongoose.models.AILesson || mongoose.model<IAILesson>('AILesson', AILessonSchema);
 

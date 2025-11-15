@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
-import Prompt from '@/lib/db/models/Prompt';
+import AILesson from '@/lib/db/models/AILesson';
 
-// GET /api/prompts/:id - Fetch single prompt
+// GET /api/aiLessons/:id - Get single AI lesson
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -11,16 +11,16 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
-    const prompt = await Prompt.findById(id).populate('relatedCourseId');
+    const lesson = await AILesson.findById(id).populate('aiCourseId');
 
-    if (!prompt) {
+    if (!lesson) {
       return NextResponse.json(
-        { success: false, error: 'Prompt not found' },
+        { success: false, error: 'AI Lesson not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, data: prompt }, { status: 200 });
+    return NextResponse.json({ success: true, data: lesson }, { status: 200 });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
@@ -30,7 +30,7 @@ export async function GET(
   }
 }
 
-// PUT /api/prompts/:id - Update prompt
+// PUT /api/aiLessons/:id - Update AI lesson
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -40,19 +40,19 @@ export async function PUT(
     const { id } = await params;
 
     const body = await request.json();
-    const prompt = await Prompt.findByIdAndUpdate(id, body, {
+    const lesson = await AILesson.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true,
     });
 
-    if (!prompt) {
+    if (!lesson) {
       return NextResponse.json(
-        { success: false, error: 'Prompt not found' },
+        { success: false, error: 'AI Lesson not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, data: prompt }, { status: 200 });
+    return NextResponse.json({ success: true, data: lesson }, { status: 200 });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
@@ -62,7 +62,7 @@ export async function PUT(
   }
 }
 
-// DELETE /api/prompts/:id - Delete prompt
+// DELETE /api/aiLessons/:id - Delete AI lesson
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -71,17 +71,17 @@ export async function DELETE(
     await connectDB();
     const { id } = await params;
 
-    const prompt = await Prompt.findByIdAndDelete(id);
+    const lesson = await AILesson.findByIdAndDelete(id);
 
-    if (!prompt) {
+    if (!lesson) {
       return NextResponse.json(
-        { success: false, error: 'Prompt not found' },
+        { success: false, error: 'AI Lesson not found' },
         { status: 404 }
       );
     }
 
     return NextResponse.json(
-      { success: true, message: 'Prompt deleted successfully' },
+      { success: true, message: 'AI Lesson deleted successfully' },
       { status: 200 }
     );
   } catch (error: unknown) {

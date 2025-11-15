@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IPrompt extends Document {
-  category: 'Life' | 'Business' | 'Creativity' | 'Work';
+  category: 'basic_applications' | 'productivity' | 'sales' | 'ecommerce' | 'investing' | 'web_dev' | 'customer_support' | 'cro' | 'daily_life' | 'tech' | 'education';
+  application?: string; // Optional sub-category/application name (e.g., "Leveraging Customer Data Analytics")
   prompt: string;
   tool: string; // ChatGPT, MidJourney, DALL-E, Jasper AI, etc.
   title: string;
@@ -16,8 +17,24 @@ const PromptSchema = new Schema<IPrompt>(
   {
     category: {
       type: String,
-      enum: ['Life', 'Business', 'Creativity', 'Work'],
+      enum: [
+        'basic_applications',
+        'productivity',
+        'sales',
+        'ecommerce',
+        'investing',
+        'web_dev',
+        'customer_support',
+        'cro',
+        'daily_life',
+        'tech',
+        'education',
+      ],
       required: true,
+    },
+    application: {
+      type: String,
+      // Optional sub-category/application name (e.g., "Leveraging Customer Data Analytics")
     },
     prompt: {
       type: String,
@@ -42,7 +59,7 @@ const PromptSchema = new Schema<IPrompt>(
     ],
     relatedCourseId: {
       type: Schema.Types.ObjectId,
-      ref: 'AICourse',
+      ref: 'Course',
     },
   },
   {

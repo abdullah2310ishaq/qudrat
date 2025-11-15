@@ -11,7 +11,7 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
-    const lesson = await Lesson.findById(id);
+    const lesson = await Lesson.findById(id).populate('courseId');
 
     if (!lesson) {
       return NextResponse.json(

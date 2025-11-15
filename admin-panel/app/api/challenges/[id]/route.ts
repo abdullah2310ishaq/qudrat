@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Challenge from '@/lib/db/models/Challenge';
-import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
 
 // GET /api/challenges/:id - Fetch challenge details
 export async function GET(
@@ -12,7 +11,7 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
-    const challenge = await Challenge.findById(id).populate('lessons');
+    const challenge = await Challenge.findById(id);
 
     if (!challenge) {
       return NextResponse.json(

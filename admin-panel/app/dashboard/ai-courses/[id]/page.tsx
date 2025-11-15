@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface Lesson {
   _id: string;
@@ -110,14 +111,14 @@ export default function EditAICoursePage() {
 
   const fetchLessons = async () => {
     try {
-      const res = await fetch('/api/lessons');
+      const res = await fetch(`/api/aiLessons?aiCourseId=${courseId}`);
       const data = await res.json();
       if (data.success) {
         setLessons(data.data || []);
       }
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Error fetching lessons:', errorMessage);
+      console.error('Error fetching AI lessons:', errorMessage);
     }
   };
 
@@ -208,10 +209,19 @@ export default function EditAICoursePage() {
     setSaving(true);
 
     try {
+      // Clean up empty strings for optional fields
+      const submitData = {
+        ...formData,
+        certificateId: formData.certificateId || undefined,
+        category: formData.category || undefined,
+        subHeading: formData.subHeading || undefined,
+        coverImage: formData.coverImage || undefined,
+      };
+      
       const res = await fetch(`/api/aiCourses/${courseId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       const data = await res.json();
@@ -241,9 +251,17 @@ export default function EditAICoursePage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Edit AI Mastery Path</h1>
-        <p className="text-zinc-400">Update mastery path structure and levels</p>
+      <div className="mb-8 flex justify-between items-start">
+        <div>
+          <h1 className="text-4xl font-bold text-white mb-2">Edit AI Mastery Path</h1>
+          <p className="text-zinc-400">Update mastery path structure and levels</p>
+        </div>
+        <Link
+          href={`/dashboard/ai-courses/${courseId}/add-lessons`}
+          className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+        >
+          + Add Lessons
+        </Link>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-4xl">
@@ -409,25 +427,45 @@ export default function EditAICoursePage() {
                       </div>
 
                       <div className="mb-2">
-                        <label className="block text-sm font-medium text-white mb-2">
-                          Select Lessons
-                        </label>
-                        <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border rounded p-2">
-                          {lessons.map((lesson) => (
-                            <label
-                              key={lesson._id}
-                              className="flex items-center space-x-2 cursor-pointer hover:bg-zinc-700 p-1 rounded text-white"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={level.lessons.includes(lesson._id)}
-                                onChange={() => toggleLessonInLevel(index, lesson._id)}
-                                className="h-4 w-4 text-indigo-600"
-                              />
-                              <span className="text-sm">{lesson.title}</span>
-                            </label>
-                          ))}
+                        <div className="flex justify-between items-center mb-2">
+                          <label className="block text-sm font-medium text-white">
+                            Select Lessons
+                          </label>
+                          <Link
+                            href={`/dashboard/ai-courses/${courseId}/add-lessons`}
+                            className="text-xs px-3 py-1 bg-white text-black rounded-lg hover:bg-zinc-200 transition-all font-semibold"
+                          >
+                            + Add Lessons
+                          </Link>
                         </div>
+                        {lessons.length === 0 ? (
+                          <div className="border rounded p-4 text-center bg-zinc-900">
+                            <p className="text-zinc-400 text-sm mb-2">No lessons created yet</p>
+                            <Link
+                              href={`/dashboard/ai-courses/${courseId}/add-lessons`}
+                              className="text-xs px-4 py-2 bg-white text-black rounded-lg hover:bg-zinc-200 transition-all font-semibold inline-block"
+                            >
+                              Create Lessons
+                            </Link>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border rounded p-2">
+                            {lessons.map((lesson) => (
+                              <label
+                                key={lesson._id}
+                                className="flex items-center space-x-2 cursor-pointer hover:bg-zinc-700 p-1 rounded text-white"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={level.lessons.includes(lesson._id)}
+                                  onChange={() => toggleLessonInLevel(index, lesson._id)}
+                                  className="h-4 w-4 text-indigo-600"
+                                />
+                                <span className="text-sm">{lesson.title}</span>
+                              </label>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex gap-4">

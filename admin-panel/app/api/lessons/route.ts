@@ -9,11 +9,14 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const courseId = searchParams.get('courseId');
+    const aiCourseId = searchParams.get('aiCourseId');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
-    const query: Record<string, string> = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const query: Record<string, any> = {};
     if (courseId) query.courseId = courseId;
+    if (aiCourseId) query.aiCourseId = aiCourseId;
 
     const skip = (page - 1) * limit;
 
@@ -32,7 +35,7 @@ export async function GET(request: NextRequest) {
           page,
           limit,
           total,
-          pages: Math.ceil(total / limit),
+          totalPages: Math.ceil(total / limit),
         },
       },
       { status: 200 }
@@ -52,17 +55,17 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-    const { courseId, title, content, media, photos, order, isInteractive, questions, canRead, canListen } = body;
+    const { courseId, aiCourseId, title, content, media, photos, order, isInteractive, questions, canRead, canListen } = body;
 
-    if (!courseId || !title || !content) {
+    if ((!courseId && !aiCourseId) || !title || !content) {
       return NextResponse.json(
-        { success: false, error: 'CourseId, title, and content are required' },
+        { success: false, error: 'Either courseId or aiCourseId, title, and content are required' },
         { status: 400 }
       );
     }
 
-    const lesson = await Lesson.create({
-      courseId,
+    // Build lesson object - only include fields that are provided
+    const lessonData: Record<string, unknown> = {
       title,
       content,
       media: media || [],
@@ -72,7 +75,20 @@ export async function POST(request: NextRequest) {
       questions: questions || [],
       canRead: canRead !== undefined ? canRead : true,
       canListen: canListen !== undefined ? canListen : false,
-    });
+    };
+
+    // Only include courseId or aiCourseId if provided (don't include undefined/null)
+    if (courseId && courseId.trim() !== '') {
+      lessonData.courseId = courseId;
+    }
+    if (aiCourseId && aiCourseId.trim() !== '') {
+      lessonData.aiCourseId = aiCourseId;
+    }
+
+    console.log('Creating lesson with data:', JSON.stringify(lessonData, null, 2));
+    console.log('Has courseId:', !!lessonData.courseId, 'Has aiCourseId:', !!lessonData.aiCourseId);
+    
+    const lesson = await Lesson.create(lessonData);
 
     return NextResponse.json(
       { success: true, data: lesson },
@@ -80,6 +96,14 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error creating lesson:', error);
+    // Log full error details for debugging
+    if (error instanceof Error) {
+      console.error('Error stack:', error.stack);
+      if ('errors' in error) {
+        console.error('Validation errors:', JSON.stringify(error.errors, null, 2));
+      }
+    }
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

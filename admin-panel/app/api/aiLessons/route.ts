@@ -1,45 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
-import Challenge from '@/lib/db/models/Challenge';
+import AILesson from '@/lib/db/models/AILesson';
 
-// GET /api/challenges - Fetch all challenges
+// GET /api/aiLessons?aiCourseId=xxx - Fetch lessons for an AI course
 export async function GET(request: NextRequest) {
   try {
     await connectDB();
 
     const { searchParams } = new URL(request.url);
-    const isActive = searchParams.get('isActive');
-    const level = searchParams.get('level');
-    const search = searchParams.get('search');
+    const aiCourseId = searchParams.get('aiCourseId');
     const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
+    const limit = parseInt(searchParams.get('limit') || '10');
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const query: Record<string, any> = {};
-    if (isActive !== null) query.isActive = isActive === 'true';
-    if (level) query.level = level;
+    if (aiCourseId) query.aiCourseId = aiCourseId;
 
-    // Add search functionality
-    if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-      ];
-    }
-
-    // Calculate pagination
     const skip = (page - 1) * limit;
-    const total = await Challenge.countDocuments(query);
 
-    const challenges = await Challenge.find(query)
-      .sort({ createdAt: -1 })
+    const lessons = await AILesson.find(query)
+      .populate('aiCourseId')
+      .sort({ order: 1 })
       .skip(skip)
       .limit(limit);
+
+    const total = await AILesson.countDocuments(query);
 
     return NextResponse.json(
       {
         success: true,
-        data: challenges,
+        data: lessons,
         pagination: {
           page,
           limit,
@@ -58,41 +48,41 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/challenges - Add challenge
+// POST /api/aiLessons - Add a lesson for AI course
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
 
     const body = await request.json();
-    const {
-      title,
-      description,
-      duration,
-      level,
-      isActive,
-    } = body;
+    const { aiCourseId, title, content, media, photos, order, isInteractive, questions, canRead, canListen } = body;
 
-    if (!title || !description || !duration || !level) {
+    if (!aiCourseId || !title || !content) {
       return NextResponse.json(
-        { success: false, error: 'Title, description, duration, and level are required' },
+        { success: false, error: 'aiCourseId, title, and content are required' },
         { status: 400 }
       );
     }
 
-    const challenge = await Challenge.create({
+    const lesson = await AILesson.create({
+      aiCourseId,
       title,
-      description,
-      duration,
-      level,
-      isActive: isActive !== undefined ? isActive : true,
+      content,
+      media: media || [],
+      photos: photos || [], // Base64 encoded images (optional)
+      order: order || 0,
+      isInteractive: isInteractive || false,
+      questions: questions || [],
+      canRead: canRead !== undefined ? canRead : true,
+      canListen: canListen !== undefined ? canListen : false,
     });
 
     return NextResponse.json(
-      { success: true, data: challenge },
+      { success: true, data: lesson },
       { status: 201 }
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error creating AI lesson:', error);
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

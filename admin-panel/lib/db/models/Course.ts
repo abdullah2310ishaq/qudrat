@@ -4,7 +4,7 @@ export interface ICourse extends Document {
   title: string;
   heading: string;
   subHeading?: string;
-  type: 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested';
+  type: 'simple' | 'challenge';
   lessons: mongoose.Types.ObjectId[];
   category: string;
   photo?: string; // Base64 encoded cover photo (optional)
@@ -28,7 +28,7 @@ const CourseSchema = new Schema<ICourse>(
     },
     type: {
       type: String,
-      enum: ['simple', 'mastery-path', 'challenge', 'prompt-suggested'],
+      enum: ['simple', 'challenge'],
       required: true,
     },
     lessons: [

@@ -11,7 +11,7 @@ export default function NewCoursePage() {
     title: '',
     heading: '',
     subHeading: '',
-    type: 'simple' as 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested',
+    type: 'simple' as 'simple' | 'challenge',
     category: 'General',
     photo: '',
     isActive: true,
@@ -107,15 +107,13 @@ export default function NewCoursePage() {
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  type: e.target.value as 'simple' | 'mastery-path' | 'challenge' | 'prompt-suggested',
+                  type: e.target.value as 'simple' | 'challenge',
                 })
               }
               className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
             >
               <option value="simple">Simple Course</option>
-              <option value="mastery-path">Mastery Path (AI Course)</option>
               <option value="challenge">Challenge Course</option>
-              <option value="prompt-suggested">Prompt-Suggested Course</option>
             </select>
           </div>
 
