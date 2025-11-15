@@ -12,18 +12,26 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
+    console.log(`🔍 Fetching course with ID: ${id}`);
+
     const course = await Course.findById(id).populate('lessons');
 
     if (!course) {
+      console.log(`❌ Course not found: ${id}`);
       return NextResponse.json(
         { success: false, error: 'Course not found' },
         { status: 404 }
       );
     }
 
+    console.log(`✅ Course found: ${course.title}`);
     return NextResponse.json({ success: true, data: course }, { status: 200 });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('❌ Error fetching course:', error);
+    if (error instanceof Error) {
+      console.error('Error stack:', error.stack);
+    }
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

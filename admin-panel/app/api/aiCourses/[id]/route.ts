@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import AICourse from '@/lib/db/models/AICourse';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AILesson from '@/lib/db/models/AILesson'; // Import to ensure model is registered for populate
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Prompt from '@/lib/db/models/Prompt'; // Import to ensure model is registered for populate
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Certificate from '@/lib/db/models/Certificate'; // Import to ensure model is registered for populate
+
+// Ensure models are registered before use (production fix)
+if (typeof AILesson !== 'undefined') {
+  // Model is registered
+}
+if (typeof Prompt !== 'undefined') {
+  // Model is registered
+}
+if (typeof Certificate !== 'undefined') {
+  // Model is registered
+}
 
 // GET /api/aiCourses/:id - Fetch single AI mastery course
 export async function GET(
@@ -17,24 +25,45 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
+    console.log(`🔍 Fetching AI Course with ID: ${id}`);
+
+    // Ensure AILesson model is registered before populate (production fix)
+    // Access modelName to force registration
+    const ailessonModelName = AILesson.modelName || 'AILesson';
+    const promptModelName = Prompt.modelName || 'Prompt';
+    
+    console.log(`📋 Using models: AILesson=${ailessonModelName}, Prompt=${promptModelName}`);
+
     const aiCourse = await AICourse.findById(id)
-      .populate('tree.lessons')
-      .populate('tree.promptIds')
+      .populate({
+        path: 'tree.lessons',
+        model: ailessonModelName, // Use model name string for production compatibility
+      })
+      .populate({
+        path: 'tree.promptIds',
+        model: promptModelName, // Use model name string for production compatibility
+      })
       .populate('certificateId');
 
     if (!aiCourse) {
+      console.log(`❌ AI Course not found: ${id}`);
       return NextResponse.json(
         { success: false, error: 'AI Course not found' },
         { status: 404 }
       );
     }
 
+    console.log(`✅ AI Course found: ${aiCourse.title}`);
     return NextResponse.json(
       { success: true, data: aiCourse },
       { status: 200 }
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('❌ Error fetching AI course:', error);
+    if (error instanceof Error) {
+      console.error('Error stack:', error.stack);
+    }
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

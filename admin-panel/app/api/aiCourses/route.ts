@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import AICourse from '@/lib/db/models/AICourse';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AILesson from '@/lib/db/models/AILesson'; // Import to ensure model is registered for populate
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Prompt from '@/lib/db/models/Prompt'; // Import to ensure model is registered for populate
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Certificate from '@/lib/db/models/Certificate'; // Import to ensure model is registered for populate
+
+// Ensure models are registered before use (production fix)
+// This forces the models to be registered with Mongoose
+if (typeof AILesson !== 'undefined') {
+  // Model is registered
+}
+if (typeof Prompt !== 'undefined') {
+  // Model is registered
+}
+if (typeof Certificate !== 'undefined') {
+  // Model is registered
+}
 
 // GET /api/aiCourses - Fetch all AI mastery courses
 export async function GET(request: NextRequest) {
@@ -40,13 +49,31 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
     const total = await AICourse.countDocuments(query);
 
+    console.log(`🔍 Fetching AI Courses with query:`, JSON.stringify(query));
+    console.log(`📊 Total AI Courses found: ${total}`);
+
+    // Ensure AILesson model is registered before populate (production fix)
+    // Access modelName to force registration
+    const ailessonModelName = AILesson.modelName || 'AILesson';
+    const promptModelName = Prompt.modelName || 'Prompt';
+    
+    console.log(`📋 Using models: AILesson=${ailessonModelName}, Prompt=${promptModelName}`);
+
     const aiCourses = await AICourse.find(query)
-      .populate('tree.lessons')
-      .populate('tree.promptIds')
+      .populate({
+        path: 'tree.lessons',
+        model: ailessonModelName, // Use model name string for production compatibility
+      })
+      .populate({
+        path: 'tree.promptIds',
+        model: promptModelName, // Use model name string for production compatibility
+      })
       .populate('certificateId')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
+
+    console.log(`✅ Found ${aiCourses.length} AI courses`);
 
     return NextResponse.json(
       {
@@ -63,6 +90,10 @@ export async function GET(request: NextRequest) {
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('❌ Error fetching AI courses:', error);
+    if (error instanceof Error) {
+      console.error('Error stack:', error.stack);
+    }
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

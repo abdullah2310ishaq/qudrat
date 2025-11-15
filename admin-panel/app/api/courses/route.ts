@@ -42,6 +42,8 @@ export async function GET(request: NextRequest) {
       .skip(skip)
       .limit(limit);
 
+    console.log(`✅ Found ${courses.length} courses (total: ${total})`);
+
     return NextResponse.json(
       {
         success: true,
@@ -57,6 +59,10 @@ export async function GET(request: NextRequest) {
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('❌ Error fetching courses:', error);
+    if (error instanceof Error) {
+      console.error('Error stack:', error.stack);
+    }
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }
