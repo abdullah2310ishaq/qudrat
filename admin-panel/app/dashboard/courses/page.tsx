@@ -89,16 +89,17 @@ export default function CoursesPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-12">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">
             Courses
           </h1>
-          <p className="text-zinc-400">Manage all your learning courses</p>
+          <div className="w-16 h-px bg-white/20 mb-4"></div>
+          <p className="text-sm font-light text-white/60 tracking-wide">Manage all your learning courses</p>
         </div>
         <Link
           href="/dashboard/courses/new"
-          className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+          className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
         >
           + Create Course
         </Link>
@@ -106,15 +107,15 @@ export default function CoursesPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       ) : courses.length === 0 ? (
-        <div className="text-center py-20 bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800">
-          <div className="text-6xl mb-4">📚</div>
-          <p className="text-zinc-400 mb-4 text-lg">No courses found</p>
+        <div className="text-center py-20 bg-black/40 rounded-sm border border-white/10">
+          <div className="text-5xl mb-4 opacity-70">📚</div>
+          <p className="text-sm font-light text-white/60 mb-6 tracking-wide">No courses found</p>
           <Link
             href="/dashboard/courses/new"
-            className="inline-block px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all shadow-lg hover:shadow-xl font-semibold"
+            className="inline-block px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
           >
             Create your first course
           </Link>
@@ -122,24 +123,24 @@ export default function CoursesPage() {
       ) : (
         <>
           {/* Search & Filters */}
-          <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-6 mb-6">
+          <div className="bg-black/40 rounded-sm border border-white/10 p-6 mb-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-white mb-2">Search Courses</label>
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Search Courses</label>
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by title or heading..."
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-2">Filter by Type</label>
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Filter by Type</label>
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-white focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
                 >
                   <option value="">All Types</option>
                   <option value="simple">Simple</option>
@@ -147,122 +148,122 @@ export default function CoursesPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-white mb-2">Filter by Category</label>
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Filter by Category</label>
                 <input
                   type="text"
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
                   placeholder="Category..."
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-sm text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
                 />
               </div>
             </div>
             {(searchTerm || filterType || filterCategory) && (
-              <div className="mt-4 flex items-center gap-2">
+              <div className="mt-4 flex items-center gap-3">
                 <button
                   onClick={() => {
                     setSearchTerm('');
                     setFilterType('');
                     setFilterCategory('');
                   }}
-                  className="px-4 py-2 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 text-sm font-semibold border border-zinc-700"
+                  className="px-4 py-2 bg-white/5 text-white rounded-sm hover:bg-white/10 text-xs font-light tracking-wider uppercase border border-white/10 hover:border-white/20 transition-all"
                 >
                   Clear Filters
                 </button>
-                <span className="text-sm text-zinc-400">
+                <span className="text-xs font-light text-white/50 tracking-wide">
                   Showing {filteredCourses.length} of {courses.length} courses
                 </span>
               </div>
             )}
           </div>
 
-          <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 overflow-hidden">
-            <table className="min-w-full divide-y divide-zinc-800">
-            <thead className="bg-zinc-800">
+          <div className="bg-black/40 rounded-sm border border-white/10 overflow-hidden">
+            <table className="min-w-full divide-y divide-white/10">
+            <thead className="bg-white/5">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Title
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Type
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Category
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Lessons
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-zinc-900 divide-y divide-zinc-800">
+            <tbody className="bg-black/40 divide-y divide-white/10">
               {filteredCourses.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center">
-                    <p className="text-zinc-400">No courses match your filters</p>
+                    <p className="text-sm font-light text-white/50">No courses match your filters</p>
                   </td>
                 </tr>
               ) : (
                 filteredCourses.map((course) => (
-                <tr key={course._id} className="hover:bg-zinc-800 transition-colors">
+                <tr key={course._id} className="hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-semibold text-white">{course.title}</div>
-                    <div className="text-sm text-zinc-400">{course.heading}</div>
+                    <div className="text-sm font-light text-white">{course.title}</div>
+                    <div className="text-xs font-light text-white/50">{course.heading}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-800 text-white border border-zinc-700">
+                    <span className="px-2.5 py-1 text-xs font-light rounded-sm bg-white/5 text-white/80 border border-white/10">
                       {course.type === 'challenge' ? 'Challenge' : 'Simple'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300 font-medium">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
                     {course.category}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-800 text-white border border-zinc-700">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
+                    <span className="px-2.5 py-1 text-xs font-light rounded-sm bg-white/5 text-white/80 border border-white/10">
                       {Array.isArray(course.lessons) ? course.lessons.length : 0} lesson{course.lessons?.length !== 1 ? 's' : ''}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => toggleActive(course._id, course.isActive)}
-                      className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
+                      className={`px-2.5 py-1 text-xs font-light rounded-sm transition-all border ${
                         course.isActive
-                          ? 'bg-white text-black border border-white'
-                          : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                          ? 'bg-white/10 text-white border-white/20'
+                          : 'bg-white/5 text-white/50 border-white/10'
                       }`}
                     >
                       {course.isActive ? '✓ Active' : '○ Inactive'}
                     </button>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center gap-3">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-light">
+                    <div className="flex items-center gap-4">
                       <Link
                         href={`/dashboard/courses/${course._id}/view`}
-                        className="text-zinc-400 hover:text-white font-semibold hover:underline"
+                        className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                         title="View Details"
                       >
-                        👁️ View
+                        View
                       </Link>
                       <Link
                         href={`/dashboard/courses/${course._id}`}
-                        className="text-white hover:text-zinc-300 font-semibold hover:underline"
+                        className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                       >
                         Edit
                       </Link>
                       <Link
                         href={`/dashboard/courses/${course._id}/add-lessons`}
-                        className="text-zinc-400 hover:text-white font-semibold hover:underline"
+                        className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                       >
                         Lessons
                       </Link>
                       <button
                         onClick={() => handleDelete(course._id)}
-                        className="text-red-400 hover:text-red-300 font-semibold hover:underline"
+                        className="text-white/40 hover:text-red-400/80 transition-colors text-xs tracking-wide"
                       >
                         Delete
                       </button>

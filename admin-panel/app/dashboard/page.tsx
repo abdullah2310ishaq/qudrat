@@ -59,19 +59,20 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen p-8 bg-black">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            Admin Dashboard
+        <div className="mb-12">
+          <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">
+            Dashboard
           </h1>
-          <p className="text-zinc-400">Welcome back! Here's what's happening today.</p>
+          <div className="w-16 h-px bg-white/20 mb-4"></div>
+          <p className="text-sm font-light text-white/60 tracking-wide">Welcome back! Here's what's happening today.</p>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12">
             <StatCard 
               title="Courses" 
               value={stats.courses} 
@@ -105,32 +106,32 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-black/40 rounded-sm border border-white/10 p-8">
+          <h2 className="text-xl font-light text-white mb-8 tracking-wide">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
               href="/dashboard/courses/new"
-              className="group relative overflow-hidden bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl p-6 hover:border-white hover:shadow-xl hover:shadow-white/10 transition-all duration-300 text-center transform hover:scale-105"
+              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
             >
-              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform">📚</div>
-              <div className="font-semibold text-white group-hover:text-white transition-colors">Create New Course</div>
-              <div className="text-sm text-zinc-400 mt-1">Add a new learning course</div>
+              <div className="text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity">📚</div>
+              <div className="font-light text-white text-sm mb-1 tracking-wide">Create New Course</div>
+              <div className="text-xs font-light text-white/50 tracking-wider uppercase">Add a new learning course</div>
             </Link>
             <Link
               href="/dashboard/challenges/new"
-              className="group relative overflow-hidden bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl p-6 hover:border-white hover:shadow-xl hover:shadow-white/10 transition-all duration-300 text-center transform hover:scale-105"
+              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
             >
-              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform">🎯</div>
-              <div className="font-semibold text-white group-hover:text-white transition-colors">Create Challenge</div>
-              <div className="text-sm text-zinc-400 mt-1">Start a new challenge</div>
+              <div className="text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity">🎯</div>
+              <div className="font-light text-white text-sm mb-1 tracking-wide">Create Challenge</div>
+              <div className="text-xs font-light text-white/50 tracking-wider uppercase">Start a new challenge</div>
             </Link>
             <Link
               href="/dashboard/prompts/new"
-              className="group relative overflow-hidden bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl p-6 hover:border-white hover:shadow-xl hover:shadow-white/10 transition-all duration-300 text-center transform hover:scale-105"
+              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
             >
-              <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform">💡</div>
-              <div className="font-semibold text-white group-hover:text-white transition-colors">Add Prompt</div>
-              <div className="text-sm text-zinc-400 mt-1">Add to prompt library</div>
+              <div className="text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity">💡</div>
+              <div className="font-light text-white text-sm mb-1 tracking-wide">Add Prompt</div>
+              <div className="text-xs font-light text-white/50 tracking-wider uppercase">Add to prompt library</div>
             </Link>
           </div>
         </div>
@@ -142,15 +143,13 @@ export default function Dashboard() {
 function StatCard({ title, value, link, icon }: { title: string; value: number; link: string; icon: string }) {
   return (
     <Link href={link}>
-      <div className="group relative overflow-hidden bg-zinc-900 rounded-2xl shadow-2xl hover:shadow-white/10 border border-zinc-800 hover:border-white/20 transition-all duration-300 p-6 transform hover:scale-105 cursor-pointer">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 group-hover:opacity-10 transition-opacity rounded-full blur-2xl"></div>
+      <div className="group relative overflow-hidden bg-black/40 rounded-sm border border-white/10 hover:border-white/20 transition-all duration-300 p-6 cursor-pointer">
         <div className="relative">
           <div className="flex items-center justify-between mb-4">
-            <div className="text-3xl">{icon}</div>
-            <div className="w-12 h-12 rounded-xl bg-white opacity-10 group-hover:opacity-20 transition-opacity"></div>
+            <div className="text-2xl opacity-70 group-hover:opacity-100 transition-opacity">{icon}</div>
           </div>
-          <div className="text-sm font-medium text-zinc-400 mb-1">{title}</div>
-          <div className="text-4xl font-bold text-white">
+          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">{title}</div>
+          <div className="text-3xl font-thin text-white">
             {value}
           </div>
         </div>

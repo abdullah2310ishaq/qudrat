@@ -72,16 +72,15 @@ export default function ChallengesPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-12">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2">
-            Challenges
-          </h1>
-          <p className="text-zinc-400">Manage time-bound learning challenges</p>
+          <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Challenges</h1>
+          <div className="w-16 h-px bg-white/20 mb-4"></div>
+          <p className="text-sm font-light text-white/60 tracking-wide">Manage time-bound learning challenges</p>
         </div>
         <Link
           href="/dashboard/challenges/new"
-          className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+          className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
         >
           + Create Challenge
         </Link>
@@ -89,42 +88,38 @@ export default function ChallengesPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       ) : challenges.length === 0 ? (
-        <div className="text-center py-20 bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800">
-          <div className="text-6xl mb-4">🎯</div>
-          <p className="text-zinc-400 mb-4 text-lg">No challenges found</p>
+        <div className="text-center py-20 bg-black/40 rounded-sm border border-white/10">
+          <div className="text-5xl mb-4 opacity-70">🎯</div>
+          <p className="text-sm font-light text-white/60 mb-6 tracking-wide">No challenges found</p>
           <Link
             href="/dashboard/challenges/new"
-            className="inline-block px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all shadow-lg hover:shadow-xl font-semibold"
+            className="inline-block px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
           >
             Create your first challenge
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {challenges.map((challenge) => (
-            <div key={challenge._id} className="group bg-zinc-900 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-300 p-6 border border-zinc-800 hover:border-white/20 transform hover:scale-105">
-              <div className="flex justify-between items-start mb-3">
-                <h3 className="text-lg font-bold text-white group-hover:text-white transition-colors">{challenge.title}</h3>
-                <span className={`px-3 py-1 text-xs font-bold rounded-full border ${
-                  challenge.level === 'Beginner' ? 'bg-zinc-800 text-white border-zinc-700' :
-                  challenge.level === 'Intermediate' ? 'bg-zinc-800 text-white border-zinc-700' :
-                  'bg-zinc-800 text-white border-zinc-700'
-                }`}>
+            <div key={challenge._id} className="group bg-black/40 rounded-sm border border-white/10 hover:border-white/20 transition-all duration-300 p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-base font-light text-white flex-1 pr-2">{challenge.title}</h3>
+                <span className="px-2.5 py-1 text-xs font-light rounded-sm bg-white/5 text-white/80 border border-white/10">
                   {challenge.level}
                 </span>
               </div>
-              <p className="text-sm text-zinc-400 mb-4 line-clamp-2">{challenge.description}</p>
-              <div className="flex items-center justify-between mb-4 pb-4 border-b border-zinc-800">
-                <span className="text-sm text-zinc-300 font-medium">⏱️ {challenge.duration} days</span>
+              <p className="text-xs font-light text-white/60 mb-4 line-clamp-2">{challenge.description}</p>
+              <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
+                <span className="text-xs font-light text-white/50">⏱️ {challenge.duration} days</span>
                 <button
                   onClick={() => toggleActive(challenge._id, challenge.isActive)}
-                  className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
+                  className={`px-2.5 py-1 text-xs font-light rounded-sm transition-all border ${
                     challenge.isActive
-                      ? 'bg-white text-black border border-white'
-                      : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                      ? 'bg-white/10 text-white border-white/20'
+                      : 'bg-white/5 text-white/50 border-white/10'
                   }`}
                 >
                   {challenge.isActive ? '✓ Active' : '○ Inactive'}
@@ -133,13 +128,13 @@ export default function ChallengesPage() {
               <div className="flex gap-2">
                 <Link
                   href={`/dashboard/challenges/${challenge._id}`}
-                  className="flex-1 text-center px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all shadow-md hover:shadow-lg text-sm font-semibold"
+                  className="flex-1 text-center px-3 py-2 bg-white/5 text-white rounded-sm hover:bg-white/10 text-xs font-light tracking-wide border border-white/10 hover:border-white/20 transition-all"
                 >
                   Edit
                 </Link>
                 <button
                   onClick={() => handleDelete(challenge._id)}
-                  className="px-4 py-2 bg-zinc-800 text-red-400 border border-red-400/30 rounded-xl hover:bg-red-400/10 transition-all shadow-md hover:shadow-lg text-sm font-semibold"
+                  className="px-3 py-2 bg-white/5 text-white/40 hover:text-red-400/80 rounded-sm hover:bg-white/10 text-xs font-light tracking-wide border border-white/10 hover:border-red-400/30 transition-all"
                 >
                   Delete
                 </button>

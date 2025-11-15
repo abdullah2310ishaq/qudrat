@@ -56,14 +56,15 @@ export default function LessonsPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-12">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2">Lessons</h1>
-          <p className="text-zinc-400">Manage all lessons across courses</p>
+          <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Lessons</h1>
+          <div className="w-16 h-px bg-white/20 mb-4"></div>
+          <p className="text-sm font-light text-white/60 tracking-wide">Manage all lessons across courses</p>
         </div>
         <Link
           href="/dashboard/lessons/new"
-          className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+          className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
         >
           + Create Lesson
         </Link>
@@ -71,68 +72,68 @@ export default function LessonsPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       ) : lessons.length === 0 ? (
-        <div className="text-center py-20 bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800">
-          <div className="text-6xl mb-4">📚</div>
-          <p className="text-zinc-400 mb-4 text-lg">No lessons found</p>
+        <div className="text-center py-20 bg-black/40 rounded-sm border border-white/10">
+          <div className="text-5xl mb-4 opacity-70">📖</div>
+          <p className="text-sm font-light text-white/60 mb-6 tracking-wide">No lessons found</p>
           <Link
             href="/dashboard/lessons/new"
-            className="inline-block px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all shadow-lg hover:shadow-xl font-semibold"
+            className="inline-block px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
           >
             Create your first lesson
           </Link>
         </div>
       ) : (
-        <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 overflow-hidden">
-          <table className="min-w-full divide-y divide-zinc-800">
-            <thead className="bg-zinc-800">
+        <div className="bg-black/40 rounded-sm border border-white/10 overflow-hidden">
+          <table className="min-w-full divide-y divide-white/10">
+            <thead className="bg-white/5">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Title
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Order
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Course ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-zinc-900 divide-y divide-zinc-800">
+            <tbody className="bg-black/40 divide-y divide-white/10">
               {lessons.map((lesson) => (
-                <tr key={lesson._id} className="hover:bg-zinc-800 transition-colors">
+                <tr key={lesson._id} className="hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-white">{lesson.title}</div>
+                    <div className="text-sm font-light text-white">{lesson.title}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
                     {lesson.order}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/50 font-light">
                     {lesson.courseId}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center gap-3">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-light">
+                    <div className="flex items-center gap-4">
                       <Link
                         href={`/dashboard/lessons/${lesson._id}/view`}
-                        className="text-zinc-400 hover:text-white font-semibold hover:underline"
+                        className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                         title="View Details"
                       >
-                        👁️ View
+                        View
                       </Link>
                       <Link
                         href={`/dashboard/lessons/${lesson._id}`}
-                        className="text-white hover:text-zinc-300 font-semibold hover:underline"
+                        className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                       >
                         Edit
                       </Link>
                       <button
                         onClick={() => handleDelete(lesson._id)}
-                        className="text-red-400 hover:text-red-300 font-semibold hover:underline"
+                        className="text-white/40 hover:text-red-400/80 transition-colors text-xs tracking-wide"
                       >
                         Delete
                       </button>
