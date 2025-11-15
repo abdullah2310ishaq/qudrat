@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import User from '@/lib/db/models/User';
+import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
+import Certificate from '@/lib/db/models/Certificate'; // Import to ensure model is registered for populate
 
 // GET /api/users - List all users
 export async function GET() {

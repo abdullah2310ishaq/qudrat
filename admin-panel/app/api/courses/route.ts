@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Course from '@/lib/db/models/Course';
+import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
 
 // GET /api/courses - Fetch all courses
 export async function GET(request: NextRequest) {

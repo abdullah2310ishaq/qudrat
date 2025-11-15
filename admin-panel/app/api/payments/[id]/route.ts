@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Payment from '@/lib/db/models/Payment';
+import User from '@/lib/db/models/User'; // Import to ensure model is registered for populate
+import Course from '@/lib/db/models/Course'; // Import to ensure model is registered for populate
 
 // GET /api/payments/:id - Fetch single payment
 export async function GET(

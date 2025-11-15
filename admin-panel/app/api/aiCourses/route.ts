@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import AICourse from '@/lib/db/models/AICourse';
+import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
+import Prompt from '@/lib/db/models/Prompt'; // Import to ensure model is registered for populate
+import Certificate from '@/lib/db/models/Certificate'; // Import to ensure model is registered for populate
 
 // GET /api/aiCourses - Fetch all AI mastery courses
 export async function GET() {

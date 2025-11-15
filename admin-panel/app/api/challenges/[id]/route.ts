@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Challenge from '@/lib/db/models/Challenge';
+import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
 
 // GET /api/challenges/:id - Fetch challenge details
 export async function GET(
