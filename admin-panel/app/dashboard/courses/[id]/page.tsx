@@ -111,7 +111,7 @@ export default function EditCoursePage() {
     return (
       <div className="p-8 bg-black">
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       </div>
     );
@@ -119,25 +119,26 @@ export default function EditCoursePage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
+      <div className="mb-12">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Edit Course</h1>
-            <p className="text-zinc-400">Update course details and manage content</p>
+            <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Edit Course</h1>
+            <div className="w-16 h-px bg-white/20 mb-4"></div>
+            <p className="text-sm font-light text-white/60 tracking-wide">Update course details and manage content</p>
           </div>
           <Link
             href={`/dashboard/courses/${courseId}/view`}
-            className="px-6 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all font-semibold border border-zinc-700"
+            className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
           >
-            👁️ View Details
+            View Details
           </Link>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-2xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-2xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Title *
             </label>
             <input
@@ -145,12 +146,12 @@ export default function EditCoursePage() {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Heading *
             </label>
             <input
@@ -158,24 +159,24 @@ export default function EditCoursePage() {
               required
               value={formData.heading}
               onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Sub Heading
             </label>
             <input
               type="text"
               value={formData.subHeading || ''}
               onChange={(e) => setFormData({ ...formData, subHeading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Type *
             </label>
             <select
@@ -184,7 +185,7 @@ export default function EditCoursePage() {
               onChange={(e) =>
                 setFormData({ ...formData, type: e.target.value as 'simple' | 'challenge' })
               }
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             >
               <option value="simple">Simple Course</option>
               <option value="challenge">Challenge Course</option>
@@ -192,14 +193,14 @@ export default function EditCoursePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Category
             </label>
             <input
               type="text"
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
             />
           </div>
 
@@ -209,57 +210,57 @@ export default function EditCoursePage() {
               id="isActive"
               checked={formData.isActive}
               onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-              className="h-4 w-4 text-white bg-zinc-800 border-zinc-700 rounded focus:ring-white"
+              className="h-4 w-4 border-white/10 rounded-sm bg-white/5 focus:ring-white/20"
             />
-            <label htmlFor="isActive" className="ml-2 block text-sm text-white">
-              Active <span className="text-zinc-400 text-xs">(Show to users)</span>
+            <label htmlFor="isActive" className="ml-2 block text-sm font-light text-white">
+              Active <span className="text-white/40 text-xs">(Show to users)</span>
             </label>
           </div>
 
           {/* Advanced Options - Collapsible */}
-          <div className="border-t border-zinc-800 pt-6">
+          <div className="border-t border-white/10 pt-6">
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center justify-between w-full text-left text-white font-semibold hover:text-zinc-300 transition-colors"
+              className="flex items-center justify-between w-full text-left text-white font-light hover:text-white/80 transition-colors"
             >
-              <span>Advanced Options</span>
-              <span className="text-zinc-400">{showAdvanced ? '▼' : '▶'}</span>
+              <span className="text-xs tracking-wider uppercase">Advanced Options</span>
+              <span className="text-white/40">{showAdvanced ? '▼' : '▶'}</span>
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-4 pl-4 border-l-2 border-zinc-800">
+              <div className="mt-4 space-y-4 pl-4 border-l border-white/10">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">
-                    Cover Photo <span className="text-zinc-400 text-xs">(Optional - Base64 encoded)</span>
+                  <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                    Cover Photo <span className="text-white/40 text-xs">(Optional - Base64 encoded)</span>
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all text-xs"
+                    className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all text-xs"
                     placeholder="Base64 encoded image (optional)"
                   />
-                  <p className="text-xs text-zinc-400 mt-1">Upload image and convert to Base64, or leave empty</p>
+                  <p className="text-xs text-white/40 mt-1">Upload image and convert to Base64, or leave empty</p>
                 </div>
               </div>
             )}
           </div>
 
           {/* Lessons Section */}
-          <div className="border-t border-zinc-800 pt-6">
+          <div className="border-t border-white/10 pt-6">
             <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-white">Lessons</h3>
+                <h3 className="text-sm font-light text-white tracking-wider uppercase">Lessons</h3>
                 <div className="flex items-center gap-4 mt-2">
-                  <p className="text-sm text-zinc-400">{lessons.length} lesson{lessons.length !== 1 ? 's' : ''} in this course</p>
+                  <p className="text-xs font-light text-white/60">{lessons.length} lesson{lessons.length !== 1 ? 's' : ''} in this course</p>
                   {lessons.length > 0 && (
                     <div className="flex items-center gap-2">
-                      <div className="w-32 h-2 bg-zinc-800 rounded-full overflow-hidden">
+                      <div className="w-32 h-2 border border-white/10 rounded-full overflow-hidden bg-white/5">
                         <div 
-                          className="h-full bg-white transition-all"
+                          className="h-full bg-white/20 transition-all"
                           style={{ width: `${Math.min((lessons.length / 10) * 100, 100)}%` }}
                         ></div>
                       </div>
-                      <span className="text-xs text-zinc-400">
+                      <span className="text-xs font-light text-white/50">
                         {lessons.length}/10+ lessons
                       </span>
                     </div>
@@ -268,18 +269,18 @@ export default function EditCoursePage() {
               </div>
               <Link
                 href={`/dashboard/courses/${courseId}/add-lessons`}
-                className="px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
+                className="px-4 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all font-light text-xs tracking-wider uppercase"
               >
                 + Add Lessons
               </Link>
             </div>
 
             {lessons.length === 0 ? (
-              <div className="text-center py-8 bg-zinc-800 rounded-xl border border-zinc-700 border-dashed">
-                <p className="text-zinc-400 mb-4">No lessons added yet</p>
+              <div className="text-center py-8 border border-white/10 border-dashed rounded-sm bg-white/5">
+                <p className="text-white/60 mb-4 font-light text-sm">No lessons added yet</p>
                 <Link
                   href={`/dashboard/courses/${courseId}/add-lessons`}
-                  className="inline-block px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
+                  className="inline-block px-4 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all font-light text-xs tracking-wider uppercase"
                 >
                   Add First Lesson
                 </Link>
@@ -291,15 +292,15 @@ export default function EditCoursePage() {
                   .map((lesson) => (
                     <div
                       key={lesson._id}
-                      className="flex items-center justify-between p-4 bg-zinc-800 rounded-xl border border-zinc-700 hover:border-white/20 transition-colors"
+                      className="flex items-center justify-between p-4 border border-white/10 rounded-sm bg-white/5 hover:border-white/20 transition-colors"
                     >
                       <div className="flex items-center gap-4">
-                        <span className="text-sm font-semibold text-zinc-400 w-8">#{lesson.order}</span>
-                        <span className="text-white font-medium">{lesson.title}</span>
+                        <span className="text-xs font-light text-white/50 w-8">#{lesson.order}</span>
+                        <span className="text-white font-light text-sm">{lesson.title}</span>
                       </div>
                       <Link
                         href={`/dashboard/lessons/${lesson._id}`}
-                        className="text-white hover:text-zinc-300 text-sm font-semibold hover:underline"
+                        className="text-white/60 hover:text-white text-xs font-light tracking-wide transition-colors"
                       >
                         Edit
                       </Link>
@@ -313,20 +314,20 @@ export default function EditCoursePage() {
             <button
               type="submit"
               disabled={saving}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
             <Link
               href={`/dashboard/lessons/new?courseId=${courseId}`}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-8 py-3 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Add Lessons
             </Link>
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-8 py-3 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </button>

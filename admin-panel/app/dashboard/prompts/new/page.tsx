@@ -52,15 +52,16 @@ export default function NewPromptPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Add New Prompt</h1>
-        <p className="text-zinc-400">Create a new AI prompt for your users</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Add New Prompt</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Create a new AI prompt for your users</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-2xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-2xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Title *
             </label>
             <input
@@ -68,13 +69,13 @@ export default function NewPromptPage() {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., LinkedIn Post Prompt"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Sub Heading *
             </label>
             <input
@@ -82,13 +83,13 @@ export default function NewPromptPage() {
               required
               value={formData.subHeading}
               onChange={(e) => setFormData({ ...formData, subHeading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., Professional AI Prompt"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Category *
             </label>
             <select
@@ -100,7 +101,7 @@ export default function NewPromptPage() {
                   category: e.target.value as 'basic_applications' | 'productivity' | 'sales' | 'ecommerce' | 'investing' | 'web_dev' | 'customer_support' | 'cro' | 'daily_life' | 'tech' | 'education',
                 })
               }
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             >
               <option value="basic_applications">Basic Applications</option>
               <option value="productivity">Productivity</option>
@@ -117,21 +118,21 @@ export default function NewPromptPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Application <span className="text-zinc-400 text-xs">(Optional - Sub-category/Application name)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Application <span className="text-white/40 text-xs">(Optional - Sub-category/Application name)</span>
             </label>
             <input
               type="text"
               value={formData.application}
               onChange={(e) => setFormData({ ...formData, application: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., Leveraging Customer Data Analytics"
             />
-            <p className="text-xs text-zinc-400 mt-1">Leave empty if prompt is directly under category</p>
+            <p className="text-xs text-white/40 mt-1">Leave empty if prompt is directly under category</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Tool *
             </label>
             <input
@@ -139,13 +140,13 @@ export default function NewPromptPage() {
               required
               value={formData.tool}
               onChange={(e) => setFormData({ ...formData, tool: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., ChatGPT, MidJourney, DALL-E"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Prompt Content *
             </label>
             <textarea
@@ -153,20 +154,20 @@ export default function NewPromptPage() {
               rows={6}
               value={formData.prompt}
               onChange={(e) => setFormData({ ...formData, prompt: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="Enter the prompt text here..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Tags (comma-separated)
             </label>
             <input
               type="text"
               value={formData.tags}
               onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., social-media, professional, ai"
             />
           </div>
@@ -175,14 +176,14 @@ export default function NewPromptPage() {
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating...' : 'Create Prompt'}
             </button>
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </button>

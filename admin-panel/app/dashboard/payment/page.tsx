@@ -100,44 +100,45 @@ export default function PaymentPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Payment Tracking</h1>
-        <p className="text-zinc-400">View and manage all payment transactions</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Payment Tracking</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">View and manage all payment transactions</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
-          <div className="text-zinc-400 text-sm mb-1">Total Payments</div>
-          <div className="text-2xl font-bold text-white">{stats.total}</div>
+        <div className="bg-black/40 rounded-sm border border-white/10 p-6">
+          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Total Payments</div>
+          <div className="text-3xl font-thin text-white">{stats.total}</div>
         </div>
-        <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
-          <div className="text-zinc-400 text-sm mb-1">Completed</div>
-          <div className="text-2xl font-bold text-white">{stats.completed}</div>
+        <div className="bg-black/40 rounded-sm border border-white/10 p-6">
+          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Completed</div>
+          <div className="text-3xl font-thin text-white">{stats.completed}</div>
         </div>
-        <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
-          <div className="text-zinc-400 text-sm mb-1">Pending</div>
-          <div className="text-2xl font-bold text-white">{stats.pending}</div>
+        <div className="bg-black/40 rounded-sm border border-white/10 p-6">
+          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Pending</div>
+          <div className="text-3xl font-thin text-white">{stats.pending}</div>
         </div>
-        <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
-          <div className="text-zinc-400 text-sm mb-1">Failed</div>
-          <div className="text-2xl font-bold text-white">{stats.failed}</div>
+        <div className="bg-black/40 rounded-sm border border-white/10 p-6">
+          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Failed</div>
+          <div className="text-3xl font-thin text-white">{stats.failed}</div>
         </div>
-        <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
-          <div className="text-zinc-400 text-sm mb-1">Total Revenue</div>
-          <div className="text-2xl font-bold text-white">${stats.totalAmount.toFixed(2)}</div>
+        <div className="bg-black/40 rounded-sm border border-white/10 p-6">
+          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Total Revenue</div>
+          <div className="text-3xl font-thin text-white">${stats.totalAmount.toFixed(2)}</div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-6 mb-6">
+      <div className="bg-black/40 rounded-sm border border-white/10 p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">Filter by Status</label>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Filter by Status</label>
             <select
               value={filters.status}
               onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
             >
               <option value="">All Status</option>
               <option value="pending">Pending</option>
@@ -147,11 +148,11 @@ export default function PaymentPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-white mb-2">Filter by Method</label>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Filter by Method</label>
             <select
               value={filters.paymentMethod}
               onChange={(e) => setFilters({ ...filters, paymentMethod: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
             >
               <option value="">All Methods</option>
               <option value="spay">SPay</option>
@@ -164,7 +165,7 @@ export default function PaymentPage() {
           <div className="flex items-end">
             <button
               onClick={() => setFilters({ status: '', paymentMethod: '' })}
-              className="w-full px-4 py-2 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all font-semibold border border-zinc-700"
+              className="w-full px-4 py-2.5 bg-white/5 text-white rounded-sm hover:bg-white/10 text-xs font-light tracking-wider uppercase border border-white/10 hover:border-white/20 transition-all"
             >
               Clear Filters
             </button>
@@ -175,73 +176,73 @@ export default function PaymentPage() {
       {/* Payments Table */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       ) : payments.length === 0 ? (
-        <div className="text-center py-20 bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800">
-          <div className="text-6xl mb-4">💳</div>
-          <p className="text-zinc-400 mb-4 text-lg">No payments found</p>
-          <p className="text-zinc-500 text-sm">Payments will appear here when users make transactions</p>
+        <div className="text-center py-20 bg-black/40 rounded-sm border border-white/10">
+          <div className="text-5xl mb-4 opacity-70">💳</div>
+          <p className="text-sm font-light text-white/60 mb-6 tracking-wide">No payments found</p>
+          <p className="text-xs font-light text-white/50 tracking-wide">Payments will appear here when users make transactions</p>
         </div>
       ) : (
-        <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 overflow-hidden">
-          <table className="min-w-full divide-y divide-zinc-800">
-            <thead className="bg-zinc-800">
+        <div className="bg-black/40 rounded-sm border border-white/10 overflow-hidden">
+          <table className="min-w-full divide-y divide-white/10">
+            <thead className="bg-white/5">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Course
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Amount
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Method
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Transaction ID
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-zinc-900 divide-y divide-zinc-800">
+            <tbody className="bg-black/40 divide-y divide-white/10">
               {payments.map((payment) => (
-                <tr key={payment._id} className="hover:bg-zinc-800 transition-colors">
+                <tr key={payment._id} className="hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-sm font-light text-white">
                       {payment.userId?.name || 'Unknown'}
                     </div>
                     {payment.userId?.email && (
-                      <div className="text-sm text-zinc-400">{payment.userId.email}</div>
+                      <div className="text-xs text-white/50 font-light">{payment.userId.email}</div>
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {payment.courseId ? (
                       <div>
-                        <div className="text-sm font-semibold text-white">{payment.courseId.title}</div>
-                        <div className="text-xs text-zinc-400">{payment.courseId.heading}</div>
+                        <div className="text-sm font-light text-white">{payment.courseId.title}</div>
+                        <div className="text-xs text-white/50 font-light">{payment.courseId.heading}</div>
                       </div>
                     ) : (
-                      <span className="text-zinc-500 text-sm">-</span>
+                      <span className="text-white/50 text-sm font-light">-</span>
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-bold text-white">
+                    <div className="text-sm font-light text-white">
                       {payment.currency} {payment.amount.toFixed(2)}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-800 text-white border border-zinc-700">
+                    <span className="px-2.5 py-1 text-xs font-light rounded-sm bg-white/5 text-white/80 border border-white/10">
                       {payment.paymentMethod.toUpperCase()}
                     </span>
                   </td>
@@ -249,14 +250,14 @@ export default function PaymentPage() {
                     <select
                       value={payment.status}
                       onChange={(e) => updatePaymentStatus(payment._id, e.target.value)}
-                      className={`px-3 py-1 text-xs font-semibold rounded-full border transition-all ${
+                      className={`px-2.5 py-1 text-xs font-light rounded-sm border transition-all ${
                         payment.status === 'completed'
-                          ? 'bg-white text-black border-white'
+                          ? 'bg-white/10 text-white border-white/20'
                           : payment.status === 'pending'
-                          ? 'bg-yellow-900 text-yellow-200 border-yellow-700'
+                          ? 'bg-white/5 text-white/80 border-white/10'
                           : payment.status === 'failed'
-                          ? 'bg-red-900 text-red-200 border-red-700'
-                          : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                          ? 'bg-white/5 text-white/50 border-white/10'
+                          : 'bg-white/5 text-white/50 border-white/10'
                       }`}
                     >
                       <option value="pending">Pending</option>
@@ -266,32 +267,32 @@ export default function PaymentPage() {
                     </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-zinc-300 font-mono">
+                    <div className="text-sm text-white/70 font-light font-mono">
                       {payment.transactionId || payment.requestId || '-'}
                     </div>
                     {payment.msisdn && (
-                      <div className="text-xs text-zinc-500">{payment.msisdn}</div>
+                      <div className="text-xs text-white/50 font-light">{payment.msisdn}</div>
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-zinc-300">
+                    <div className="text-sm text-white/70 font-light">
                       {new Date(payment.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
                       })}
                     </div>
-                    <div className="text-xs text-zinc-500">
+                    <div className="text-xs text-white/50 font-light">
                       {new Date(payment.createdAt).toLocaleTimeString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
                       })}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-light">
                     <Link
                       href={`/dashboard/payments/${payment._id}`}
-                      className="text-white hover:text-zinc-300 font-semibold hover:underline"
+                      className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                     >
                       View
                     </Link>

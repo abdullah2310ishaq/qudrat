@@ -97,7 +97,7 @@ export default function EditCertificateTemplatePage() {
     return (
       <div className="p-8 bg-black">
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       </div>
     );
@@ -105,16 +105,17 @@ export default function EditCertificateTemplatePage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Edit Certificate Template</h1>
-        <p className="text-zinc-400">Update certificate template design</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Edit Certificate Template</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Update certificate template design</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Preview */}
         <div className="lg:col-span-1">
-          <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-6 sticky top-8">
-            <h3 className="text-lg font-semibold text-white mb-4">Live Preview</h3>
+          <div className="bg-black/40 rounded-sm border border-white/10 p-6 sticky top-8">
+            <h3 className="text-sm font-light text-white tracking-wider uppercase mb-4">Live Preview</h3>
             <div
               className="p-8 rounded-2xl border-2"
               style={{
@@ -138,10 +139,10 @@ export default function EditCertificateTemplatePage() {
 
         {/* Form */}
         <div className="lg:col-span-2">
-          <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8">
+          <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8">
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                   Template Name *
                 </label>
                 <input
@@ -149,12 +150,12 @@ export default function EditCertificateTemplatePage() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                  className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                   Icon / Emoji *
                 </label>
                 <input
@@ -162,13 +163,13 @@ export default function EditCertificateTemplatePage() {
                   required
                   value={formData.icon}
                   onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all text-2xl text-center"
+                  className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all text-2xl text-center"
                   maxLength={2}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                   Title *
                 </label>
                 <input
@@ -176,28 +177,28 @@ export default function EditCertificateTemplatePage() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                  className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
-                  Description <span className="text-zinc-400 text-xs">(Optional)</span>
+                <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                  Description <span className="text-white/40 text-xs">(Optional)</span>
                 </label>
                 <textarea
                   value={formData.description || ''}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                  className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                   rows={3}
                 />
               </div>
 
               {/* Design Options */}
               <div className="border-t border-zinc-800 pt-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Design Options</h3>
+                <h3 className="text-sm font-light text-white tracking-wider uppercase mb-4">Design Options</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">Background Color</label>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Background Color</label>
                     <input
                       type="color"
                       value={formData.design.backgroundColor}
@@ -211,7 +212,7 @@ export default function EditCertificateTemplatePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">Text Color</label>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Text Color</label>
                     <input
                       type="color"
                       value={formData.design.textColor}
@@ -225,7 +226,7 @@ export default function EditCertificateTemplatePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">Border Color</label>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Border Color</label>
                     <input
                       type="color"
                       value={formData.design.borderColor}
@@ -239,7 +240,7 @@ export default function EditCertificateTemplatePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">Border Style</label>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">Border Style</label>
                     <select
                       value={formData.design.borderStyle}
                       onChange={(e) =>
@@ -248,7 +249,7 @@ export default function EditCertificateTemplatePage() {
                           design: { ...formData.design, borderStyle: e.target.value as 'solid' | 'dashed' | 'dotted' },
                         })
                       }
-                      className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+                      className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
                     >
                       <option value="solid">Solid</option>
                       <option value="dashed">Dashed</option>
@@ -267,7 +268,7 @@ export default function EditCertificateTemplatePage() {
                   className="h-4 w-4 text-white bg-zinc-800 border-zinc-700 rounded focus:ring-white"
                 />
                 <label htmlFor="isActive" className="ml-2 block text-sm text-white">
-                  Active <span className="text-zinc-400 text-xs">(Show in dropdowns)</span>
+                  Active <span className="text-white/40 text-xs">(Show in dropdowns)</span>
                 </label>
               </div>
 

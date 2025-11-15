@@ -42,15 +42,16 @@ export default function NewChallengePage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Create New Challenge</h1>
-        <p className="text-zinc-400">Create a time-bound challenge with daily lessons and questions</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Create New Challenge</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Create a time-bound challenge with daily lessons and questions</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-2xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-2xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Title *
             </label>
             <input
@@ -58,13 +59,13 @@ export default function NewChallengePage() {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., 30-Day AI Challenge"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Description *
             </label>
             <textarea
@@ -72,14 +73,14 @@ export default function NewChallengePage() {
               rows={4}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="Describe the challenge and what users will learn..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Duration (days) * <span className="text-zinc-400 text-xs">(e.g., 7, 30, 90)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Duration (days) * <span className="text-white/40 text-xs">(e.g., 7, 30, 90)</span>
             </label>
             <input
               type="number"
@@ -87,12 +88,12 @@ export default function NewChallengePage() {
               min="1"
               value={formData.duration}
               onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) || 7 })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Level *
             </label>
             <select
@@ -104,7 +105,7 @@ export default function NewChallengePage() {
                   level: e.target.value as 'Beginner' | 'Intermediate' | 'Advanced',
                 })
               }
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             >
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
@@ -118,16 +119,16 @@ export default function NewChallengePage() {
               id="isActive"
               checked={formData.isActive}
               onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-              className="h-4 w-4 text-white bg-zinc-800 border-zinc-700 rounded focus:ring-white"
+              className="h-4 w-4 border-white/10 rounded-sm bg-white/5 focus:ring-white/20"
             />
-            <label htmlFor="isActive" className="ml-2 block text-sm text-white">
+            <label htmlFor="isActive" className="ml-2 block text-sm font-light text-white">
               Active
             </label>
           </div>
 
-          <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700 mt-4">
-            <p className="text-sm text-zinc-400">
-              💡 <strong className="text-white">Next Step:</strong> After creating, you can add daily lessons and questions for each day.
+          <div className="border border-white/10 rounded-sm bg-white/5 p-4 mt-4">
+            <p className="text-sm font-light text-white/60">
+              💡 <span className="text-white font-light">Next Step:</span> After creating, you can add daily lessons and questions for each day.
             </p>
           </div>
 
@@ -135,14 +136,14 @@ export default function NewChallengePage() {
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating...' : 'Create Challenge'}
             </button>
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </button>

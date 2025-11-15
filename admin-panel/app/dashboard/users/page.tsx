@@ -36,58 +36,59 @@ export default function UsersPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Users</h1>
-        <p className="text-zinc-400">View and manage all platform users</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Users</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">View and manage all platform users</p>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       ) : users.length === 0 ? (
-        <div className="text-center py-20 bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800">
-          <div className="text-6xl mb-4">👥</div>
-          <p className="text-zinc-400 text-lg">No users found</p>
+        <div className="text-center py-20 bg-black/40 rounded-sm border border-white/10">
+          <div className="text-5xl mb-4 opacity-70">👥</div>
+          <p className="text-sm font-light text-white/60 mb-6 tracking-wide">No users found</p>
         </div>
       ) : (
-        <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 overflow-hidden">
-          <table className="min-w-full divide-y divide-zinc-800">
-            <thead className="bg-zinc-800">
+        <div className="bg-black/40 rounded-sm border border-white/10 overflow-hidden">
+          <table className="min-w-full divide-y divide-white/10">
+            <thead className="bg-white/5">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Email
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Streak
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Completed Lessons
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-light text-white/60 uppercase tracking-wider">
                   Certificates
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-zinc-900 divide-y divide-zinc-800">
+            <tbody className="bg-black/40 divide-y divide-white/10">
               {users.map((user) => (
-                <tr key={user._id} className="hover:bg-zinc-800 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
+                <tr key={user._id} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-light text-white">
                     {user.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
                     {user.email || '-'}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
                     {user.streak} days
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
                     {user.completedLessons?.length || 0}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 font-light">
                     {user.certificates?.length || 0}
                   </td>
                 </tr>

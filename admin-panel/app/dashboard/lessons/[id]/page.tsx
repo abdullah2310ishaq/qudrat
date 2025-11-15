@@ -146,7 +146,7 @@ export default function EditLessonPage() {
     return (
       <div className="p-8 bg-black">
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       </div>
     );
@@ -154,16 +154,17 @@ export default function EditLessonPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Edit Lesson</h1>
-        <p className="text-zinc-400">Update lesson content, questions, and media</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Edit Lesson</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Update lesson content, questions, and media</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-3xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-3xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Lesson Title * <span className="text-zinc-400 text-xs">(Max 60 characters recommended)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Lesson Title * <span className="text-white/40 text-xs">(Max 60 characters recommended)</span>
             </label>
             <input
               type="text"
@@ -171,43 +172,43 @@ export default function EditLessonPage() {
               maxLength={60}
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., Introduction to ChatGPT"
             />
-            <p className="text-xs text-zinc-400 mt-1">{formData.title.length}/60 characters</p>
+            <p className="text-xs text-white/40 mt-1">{formData.title.length}/60 characters</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Content * <span className="text-zinc-400 text-xs">(Main lesson text - supports lazy loading)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Content * <span className="text-white/40 text-xs">(Main lesson text - supports lazy loading)</span>
             </label>
             <textarea
               required
               rows={8}
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="Enter lesson content here. Use paragraphs for better readability..."
             />
-            <p className="text-xs text-zinc-400 mt-1">Use paragraphs and sections for better readability</p>
+            <p className="text-xs text-white/40 mt-1">Use paragraphs and sections for better readability</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Media URLs <span className="text-zinc-400 text-xs">(comma-separated - images, videos, PDFs)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Media URLs <span className="text-white/40 text-xs">(comma-separated - images, videos, PDFs)</span>
             </label>
             <input
               type="text"
               value={mediaInput}
               onChange={(e) => setMediaInput(e.target.value)}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="https://example.com/image.jpg, https://example.com/video.mp4"
             />
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-white mb-2">
+              <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                 Order *
               </label>
               <input
@@ -216,7 +217,7 @@ export default function EditLessonPage() {
                 min="1"
                 value={formData.order}
                 onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 1 })}
-                className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+                className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
               />
             </div>
 
@@ -248,22 +249,22 @@ export default function EditLessonPage() {
           </div>
 
           {formData.isInteractive && (
-            <div className="border-t border-zinc-700 pt-6">
+            <div className="border-t border-white/10 pt-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-white">Interactive Questions</h3>
+                <h3 className="text-sm font-light text-white tracking-wider uppercase">Interactive Questions</h3>
                 <button
                   type="button"
                   onClick={addQuestion}
-                  className="px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
+                  className="px-4 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 text-xs font-light tracking-wider uppercase"
                 >
                   + Add Question
                 </button>
               </div>
 
               {formData.questions?.map((q, qIndex) => (
-                <div key={qIndex} className="bg-zinc-800 rounded-xl p-4 mb-4 border border-zinc-700">
+                <div key={qIndex} className="border border-white/10 rounded-sm p-4 mb-4 bg-white/5">
                   <div className="flex justify-between mb-3">
-                    <span className="text-sm font-semibold text-white">Question {qIndex + 1}</span>
+                    <span className="text-xs font-light text-white tracking-wider uppercase">Question {qIndex + 1}</span>
                     <button
                       type="button"
                       onClick={() => removeQuestion(qIndex)}
@@ -277,7 +278,7 @@ export default function EditLessonPage() {
                     value={q.question}
                     onChange={(e) => updateQuestion(qIndex, 'question', e.target.value)}
                     placeholder="Question text..."
-                    className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-zinc-500 mb-3 focus:ring-2 focus:ring-white focus:border-white"
+                    className="w-full px-3 py-2 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 mb-3 focus:bg-white/10 focus:border-white/20"
                   />
                   <div className="space-y-2 mb-3">
                     {q.options.map((opt, optIndex) => (
@@ -287,14 +288,14 @@ export default function EditLessonPage() {
                         value={opt}
                         onChange={(e) => updateQuestion(qIndex, 'option', [optIndex, e.target.value])}
                         placeholder={`Option ${optIndex + 1}`}
-                        className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white"
+                        className="w-full px-3 py-2 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20"
                       />
                     ))}
                   </div>
                   <select
                     value={q.correctAnswer}
                     onChange={(e) => updateQuestion(qIndex, 'correctAnswer', parseInt(e.target.value))}
-                    className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white"
+                    className="w-full px-3 py-2 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20"
                   >
                     <option value={0}>Option 1 is correct</option>
                     <option value={1}>Option 2 is correct</option>
@@ -309,13 +310,13 @@ export default function EditLessonPage() {
             <button
               type="submit"
               disabled={saving}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'Saving...' : 'Save Lesson'}
             </button>
             <Link
               href="/dashboard/lessons"
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </Link>

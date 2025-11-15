@@ -47,17 +47,18 @@ export default function NewCoursePage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">
           Create New Course
         </h1>
-        <p className="text-zinc-400">Add a new course to your learning platform</p>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Add a new course to your learning platform</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-2xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-2xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Title *
             </label>
             <input
@@ -65,13 +66,13 @@ export default function NewCoursePage() {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
               placeholder="e.g., ChatGPT Basics"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Heading *
             </label>
             <input
@@ -79,26 +80,26 @@ export default function NewCoursePage() {
               required
               value={formData.heading}
               onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
               placeholder="e.g., Introduction to AI"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Sub Heading <span className="text-zinc-400 text-xs">(Optional)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Sub Heading <span className="text-white/40 text-xs normal-case">(Optional)</span>
             </label>
             <input
               type="text"
               value={formData.subHeading}
               onChange={(e) => setFormData({ ...formData, subHeading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
               placeholder="Optional sub-heading for better description"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Type *
             </label>
             <select
@@ -110,7 +111,7 @@ export default function NewCoursePage() {
                   type: e.target.value as 'simple' | 'challenge',
                 })
               }
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
             >
               <option value="simple">Simple Course</option>
               <option value="challenge">Challenge Course</option>
@@ -118,14 +119,14 @@ export default function NewCoursePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Category <span className="text-zinc-400 text-xs">(Optional - helps with organization)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Category <span className="text-white/40 text-xs normal-case">(Optional)</span>
             </label>
             <input
               type="text"
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-sm"
               placeholder="e.g., AI, Business, Text, Creative"
             />
           </div>
@@ -136,55 +137,55 @@ export default function NewCoursePage() {
               id="isActive"
               checked={formData.isActive}
               onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-              className="h-4 w-4 text-white bg-zinc-800 border-zinc-700 rounded focus:ring-white"
+              className="h-4 w-4 border-white/10 rounded-sm bg-white/5 focus:ring-white/20"
             />
-            <label htmlFor="isActive" className="ml-2 block text-sm text-white">
-              Active <span className="text-zinc-400 text-xs">(Show to users)</span>
+            <label htmlFor="isActive" className="ml-2 block text-sm font-light text-white">
+              Active <span className="text-white/40 text-xs">(Show to users)</span>
             </label>
           </div>
 
           {/* Advanced Options - Collapsible */}
-          <div className="border-t border-zinc-800 pt-6">
+          <div className="border-t border-white/10 pt-6">
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center justify-between w-full text-left text-white font-semibold hover:text-zinc-300 transition-colors"
+              className="flex items-center justify-between w-full text-left text-white font-light hover:text-white/80 transition-colors"
             >
-              <span>Advanced Options</span>
-              <span className="text-zinc-400">{showAdvanced ? '▼' : '▶'}</span>
+              <span className="text-xs tracking-wider uppercase">Advanced Options</span>
+              <span className="text-white/40">{showAdvanced ? '▼' : '▶'}</span>
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-4 pl-4 border-l-2 border-zinc-800">
+              <div className="mt-4 space-y-4 pl-4 border-l border-white/10">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">
-                    Cover Photo <span className="text-zinc-400 text-xs">(Optional - Base64 encoded)</span>
+                  <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                    Cover Photo <span className="text-white/40 text-xs normal-case">(Optional)</span>
                   </label>
                   <input
                     type="text"
                     value={formData.photo}
                     onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
-                    className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all text-xs"
+                    className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all font-light text-xs"
                     placeholder="Base64 encoded image (optional)"
                   />
-                  <p className="text-xs text-zinc-400 mt-1">Upload image and convert to Base64, or leave empty</p>
+                  <p className="text-xs text-white/40 mt-1 font-light">Upload image and convert to Base64, or leave empty</p>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="flex gap-4 pt-4">
+          <div className="flex gap-4 pt-6 border-t border-white/10">
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating...' : 'Create Course'}
             </button>
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </button>

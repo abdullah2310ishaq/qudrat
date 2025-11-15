@@ -122,22 +122,23 @@ export default function NewLessonPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Create New Lesson</h1>
-        <p className="text-zinc-400">Add content, questions, and media to your lesson</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Create New Lesson</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Add content, questions, and media to your lesson</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-3xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-3xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Course *
             </label>
             <select
               required
               value={formData.courseId}
               onChange={(e) => setFormData({ ...formData, courseId: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             >
               <option value="">Select a course</option>
               {courses.map((course) => (
@@ -149,8 +150,8 @@ export default function NewLessonPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Lesson Title * <span className="text-zinc-400 text-xs">(Max 60 characters recommended)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Lesson Title * <span className="text-white/40 text-xs">(Max 60 characters recommended)</span>
             </label>
             <input
               type="text"
@@ -158,43 +159,43 @@ export default function NewLessonPage() {
               maxLength={60}
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., Intro to Prompting"
             />
-            <p className="text-xs text-zinc-400 mt-1">{formData.title.length}/60 characters</p>
+            <p className="text-xs text-white/40 mt-1">{formData.title.length}/60 characters</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Content * <span className="text-zinc-400 text-xs">(Main lesson text - can be long)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Content * <span className="text-white/40 text-xs">(Main lesson text - can be long)</span>
             </label>
             <textarea
               required
               rows={12}
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="Enter lesson content here...&#10;&#10;You can add:&#10;- Long paragraphs&#10;- Multiple sections&#10;- Detailed explanations&#10;&#10;Content will be lazy loaded in Flutter app for better performance."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Media URLs <span className="text-zinc-400 text-xs">(comma-separated)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Media URLs <span className="text-white/40 text-xs">(comma-separated)</span>
             </label>
             <input
               type="text"
               value={formData.media}
               onChange={(e) => setFormData({ ...formData, media: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="https://example.com/image1.jpg, https://example.com/video1.mp4"
             />
-            <p className="text-xs text-zinc-500 mt-1">Separate multiple URLs with commas</p>
+            <p className="text-xs text-white/50 mt-1">Separate multiple URLs with commas</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Order * <span className="text-zinc-400 text-xs">(Sequence in course: 1, 2, 3...)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Order * <span className="text-white/40 text-xs">(Sequence in course: 1, 2, 3...)</span>
             </label>
             <input
               type="number"
@@ -202,53 +203,53 @@ export default function NewLessonPage() {
               min="0"
               value={formData.order}
               onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             />
           </div>
 
-          <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
+          <div className="border border-white/10 rounded-sm bg-white/5 p-4">
             <div className="flex items-center gap-6 flex-wrap">
               <label className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.isInteractive}
                   onChange={(e) => setFormData({ ...formData, isInteractive: e.target.checked })}
-                  className="h-4 w-4 bg-zinc-800 border-zinc-700 rounded focus:ring-white text-white"
+                  className="h-4 w-4 border-white/10 rounded-sm bg-white/5 focus:ring-white/20"
                 />
-                <span className="ml-2 text-sm text-white">Interactive (with questions)</span>
+                <span className="ml-2 text-sm font-light text-white">Interactive (with questions)</span>
               </label>
               <label className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.canRead}
                   onChange={(e) => setFormData({ ...formData, canRead: e.target.checked })}
-                  className="h-4 w-4 bg-zinc-800 border-zinc-700 rounded focus:ring-white text-white"
+                  className="h-4 w-4 border-white/10 rounded-sm bg-white/5 focus:ring-white/20"
                 />
-                <span className="ml-2 text-sm text-white">Can Read</span>
+                <span className="ml-2 text-sm font-light text-white">Can Read</span>
               </label>
               <label className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.canListen}
                   onChange={(e) => setFormData({ ...formData, canListen: e.target.checked })}
-                  className="h-4 w-4 bg-zinc-800 border-zinc-700 rounded focus:ring-white text-white"
+                  className="h-4 w-4 border-white/10 rounded-sm bg-white/5 focus:ring-white/20"
                 />
-                <span className="ml-2 text-sm text-white">Can Listen</span>
+                <span className="ml-2 text-sm font-light text-white">Can Listen</span>
               </label>
             </div>
           </div>
 
           {formData.isInteractive && (
-            <div className="border-t border-zinc-800 pt-6">
+            <div className="border-t border-white/10 pt-6">
               <div className="flex justify-between items-center mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-white">Interactive Questions</h3>
-                  <p className="text-xs text-zinc-400">Add quiz questions for this lesson</p>
+                  <h3 className="text-sm font-light text-white tracking-wider uppercase">Interactive Questions</h3>
+                  <p className="text-xs text-white/40">Add quiz questions for this lesson</p>
                 </div>
                 <button
                   type="button"
                   onClick={addQuestion}
-                  className="px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold transition-all"
+                  className="px-4 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 text-xs font-light tracking-wider uppercase transition-all"
                 >
                   + Add Question
                 </button>
@@ -256,18 +257,18 @@ export default function NewLessonPage() {
 
               {formData.questions.length === 0 ? (
                 <div className="text-center py-8 bg-zinc-800 rounded-xl border border-zinc-700 border-dashed">
-                  <p className="text-zinc-400 text-sm">No questions added yet. Click &quot;Add Question&quot; to start.</p>
+                  <p className="text-white/40 text-sm">No questions added yet. Click &quot;Add Question&quot; to start.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {formData.questions.map((q, index) => (
-                    <div key={index} className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
+                    <div key={index} className="border border-white/10 rounded-sm bg-white/5 p-4">
                       <div className="flex justify-between mb-3">
-                        <span className="text-sm font-semibold text-white">Question {index + 1}</span>
+                        <span className="text-xs font-light tracking-wider uppercase text-white">Question {index + 1}</span>
                         <button
                           type="button"
                           onClick={() => removeQuestion(index)}
-                          className="text-red-400 hover:text-red-300 text-sm font-semibold"
+                          className="text-red-400 hover:text-red-300 text-xs font-light tracking-wider uppercase"
                         >
                           Remove
                         </button>
@@ -277,7 +278,7 @@ export default function NewLessonPage() {
                         value={q.question}
                         onChange={(e) => updateQuestion(index, 'question', e.target.value)}
                         placeholder="Enter question text..."
-                        className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 mb-3 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                        className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-white/30 mb-3 focus:bg-white/10 focus:border-white/20 transition-all"
                       />
                       <div className="space-y-2 mb-3">
                         {q.options.map((opt, optIndex) => (
@@ -287,14 +288,14 @@ export default function NewLessonPage() {
                             value={opt}
                             onChange={(e) => updateQuestion(index, 'option', [optIndex, e.target.value])}
                             placeholder={`Option ${optIndex + 1}`}
-                            className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                            className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                           />
                         ))}
                       </div>
                       <select
                         value={q.correctAnswer}
                         onChange={(e) => updateQuestion(index, 'correctAnswer', parseInt(e.target.value))}
-                        className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+                        className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white focus:bg-white/10 focus:border-white/20 transition-all"
                       >
                         <option value={0}>Option 1 is correct</option>
                         <option value={1}>Option 2 is correct</option>
@@ -311,14 +312,14 @@ export default function NewLessonPage() {
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating...' : 'Create Lesson'}
             </button>
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-8 py-3 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </button>

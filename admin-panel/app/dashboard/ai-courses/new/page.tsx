@@ -186,15 +186,16 @@ export default function NewAICoursePage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Create AI Mastery Path</h1>
-        <p className="text-zinc-400">Build a structured learning path with levels and lessons</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Create AI Mastery Path</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">Build a structured learning path with levels and lessons</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-4xl">
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-4xl">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Title *
             </label>
             <input
@@ -202,13 +203,13 @@ export default function NewAICoursePage() {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., ChatGPT Mastery"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
               Heading *
             </label>
             <input
@@ -216,33 +217,33 @@ export default function NewAICoursePage() {
               required
               value={formData.heading}
               onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., Master ChatGPT"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Sub Heading <span className="text-zinc-400 text-xs">(Optional)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Sub Heading <span className="text-white/40 text-xs">(Optional)</span>
             </label>
             <input
               type="text"
               value={formData.subHeading}
               onChange={(e) => setFormData({ ...formData, subHeading: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="Optional sub-heading for better description"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              AI Tool / Type * <span className="text-zinc-400 text-xs">(Select the AI tool this mastery path is for)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              AI Tool / Type * <span className="text-white/40 text-xs">(Select the AI tool this mastery path is for)</span>
             </label>
             <select
               required
               value={formData.aiTool}
               onChange={(e) => setFormData({ ...formData, aiTool: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
             >
               <option value="ChatGPT">ChatGPT</option>
               <option value="MidJourney">MidJourney</option>
@@ -255,14 +256,14 @@ export default function NewAICoursePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Category / Tags <span className="text-zinc-400 text-xs">(Optional - helps with organization)</span>
+            <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+              Category / Tags <span className="text-white/40 text-xs">(Optional - helps with organization)</span>
             </label>
             <input
               type="text"
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
               placeholder="e.g., Text Generation, Image Creation, Business"
             />
           </div>
@@ -276,7 +277,7 @@ export default function NewAICoursePage() {
               className="h-4 w-4 text-white bg-zinc-800 border-zinc-700 rounded focus:ring-white"
             />
             <label htmlFor="isActive" className="ml-2 block text-sm text-white">
-              Active <span className="text-zinc-400 text-xs">(Show to users)</span>
+              Active <span className="text-white/40 text-xs">(Show to users)</span>
             </label>
           </div>
 
@@ -285,36 +286,36 @@ export default function NewAICoursePage() {
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center justify-between w-full text-left text-white font-semibold hover:text-zinc-300 transition-colors"
+              className="flex items-center justify-between w-full text-left text-white font-light hover:text-white/80 transition-colors"
             >
               <span>Advanced Options</span>
-              <span className="text-zinc-400">{showAdvanced ? '▼' : '▶'}</span>
+              <span className="text-white/40">{showAdvanced ? '▼' : '▶'}</span>
             </button>
 
             {showAdvanced && (
               <div className="mt-4 space-y-4 pl-4 border-l-2 border-zinc-800">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">
-                    Cover Image / Icon <span className="text-zinc-400 text-xs">(Optional - Base64 encoded)</span>
+                  <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                    Cover Image / Icon <span className="text-white/40 text-xs">(Optional - Base64 encoded)</span>
                   </label>
                   <input
                     type="text"
                     value={formData.coverImage}
                     onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-                    className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all text-xs"
+                    className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all text-xs"
                     placeholder="Base64 encoded image (optional)"
                   />
-                  <p className="text-xs text-zinc-400 mt-1">Upload image and convert to Base64, or leave empty</p>
+                  <p className="text-xs text-white/40 mt-1">Upload image and convert to Base64, or leave empty</p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">
-                    Certificate <span className="text-zinc-400 text-xs">(Optional - for completion)</span>
+                  <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                    Certificate <span className="text-white/40 text-xs">(Optional - for completion)</span>
                   </label>
                   <select
                     value={formData.certificateId}
                     onChange={(e) => setFormData({ ...formData, certificateId: e.target.value })}
-                    className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    className="w-full px-4 py-2.5 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20 transition-all"
                   >
                     <option value="">No Certificate</option>
                     {certificates.map((cert) => (
@@ -323,7 +324,7 @@ export default function NewAICoursePage() {
                       </option>
                     ))}
                   </select>
-                  <p className="text-xs text-zinc-400 mt-1">Select a certificate to award on completion</p>
+                  <p className="text-xs text-white/40 mt-1">Select a certificate to award on completion</p>
                 </div>
               </div>
             )}
@@ -335,20 +336,20 @@ export default function NewAICoursePage() {
               <button
                 type="button"
                 onClick={addLevel}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm"
+                className="px-4 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm"
               >
                 + Add Level
               </button>
             </div>
 
             {formData.tree.length === 0 ? (
-              <div className="text-center py-8 text-zinc-400 border-2 border-dashed border-zinc-700 rounded-xl bg-zinc-800">
+              <div className="text-center py-8 text-white/40 border-2 border-dashed border-white/10 rounded-sm bg-white/5">
                 No levels added yet. Click &quot;Add Level&quot; to start building the tree structure.
               </div>
             ) : (
               <div className="space-y-4">
                 {formData.tree.map((level, index) => (
-                  <div key={index} className="border border-zinc-700 rounded-xl p-4 bg-zinc-800">
+                  <div key={index} className="border border-white/10 rounded-sm p-4 bg-white/5">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
                         <div className="mb-2">
@@ -360,17 +361,17 @@ export default function NewAICoursePage() {
                             required
                             value={level.topic}
                             onChange={(e) => updateLevel(index, 'topic', e.target.value)}
-                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white"
+                            className="w-full px-3 py-2 border border-white/10 rounded-sm bg-white/5 text-white focus:bg-white/10 focus:border-white/20"
                             placeholder="e.g., Introduction, Prompting, Pro Topics"
                           />
                         </div>
 
                         <div className="mb-2">
-                          <label className="block text-sm font-medium text-white mb-2">
+                          <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                             Select Lessons for this Level
                           </label>
                           <div className="border rounded p-4 bg-zinc-900 border-zinc-700">
-                            <p className="text-sm text-zinc-400 mb-2">
+                            <p className="text-sm text-white/40 mb-2">
                               💡 Lessons will be added after creating the AI course. You can add lessons from the course edit page.
                             </p>
                             <p className="text-xs text-zinc-500">
@@ -378,17 +379,17 @@ export default function NewAICoursePage() {
                             </p>
                           </div>
                           {level.lessons.length > 0 && (
-                            <p className="text-xs text-zinc-400 mt-2">
+                            <p className="text-xs text-white/40 mt-2">
                               {level.lessons.length} lesson ID(s) will be assigned (add lessons after course creation)
                             </p>
                           )}
                         </div>
 
                         <div className="mb-2">
-                          <label className="block text-sm font-medium text-white mb-2">
-                            Link Prompts <span className="text-zinc-400 text-xs">(Optional - from Prompt Library)</span>
+                          <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                            Link Prompts <span className="text-white/40 text-xs">(Optional - from Prompt Library)</span>
                           </label>
-                          <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto border border-zinc-700 rounded-xl p-2 bg-black">
+                          <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto border border-white/10 rounded-sm p-2 bg-white/5">
                             {prompts
                               .filter((p) => p.tool === formData.aiTool || formData.aiTool === 'Other')
                               .map((prompt) => (
@@ -407,7 +408,7 @@ export default function NewAICoursePage() {
                               ))}
                           </div>
                           {level.promptIds.length > 0 && (
-                            <p className="text-xs text-zinc-400 mt-1">
+                            <p className="text-xs text-white/40 mt-1">
                               {level.promptIds.length} prompt(s) linked to this level
                             </p>
                           )}
@@ -437,7 +438,7 @@ export default function NewAICoursePage() {
                       <button
                         type="button"
                         onClick={() => removeLevel(index)}
-                        className="ml-4 text-red-400 hover:text-red-300 font-semibold"
+                        className="ml-4 text-red-400 hover:text-red-300 font-light"
                       >
                         Remove Level
                       </button>
@@ -452,14 +453,14 @@ export default function NewAICoursePage() {
             <button
               type="submit"
               disabled={loading || formData.tree.length === 0}
-              className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating...' : 'Create AI Mastery Path'}
             </button>
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-8 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all duration-200 font-semibold border border-zinc-700"
+              className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Cancel
             </button>

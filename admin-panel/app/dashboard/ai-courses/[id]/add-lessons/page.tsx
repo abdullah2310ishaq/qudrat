@@ -26,6 +26,17 @@ interface AICourse {
   title: string;
 }
 
+interface ExistingLesson {
+  _id: string;
+  title: string;
+  content: string;
+  order: number;
+  isInteractive: boolean;
+  canRead: boolean;
+  canListen: boolean;
+  createdAt: string;
+}
+
 export default function AddLessonsPage() {
   const router = useRouter();
   const params = useParams();
@@ -35,9 +46,11 @@ export default function AddLessonsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lessons, setLessons] = useState<LessonFormData[]>([]);
+  const [existingLessons, setExistingLessons] = useState<ExistingLesson[]>([]);
 
   useEffect(() => {
-    fetchAICourse();
+    Promise.all([fetchAICourse(), fetchExistingLessons()]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aiCourseId]);
 
   const fetchAICourse = async () => {
@@ -56,6 +69,23 @@ export default function AddLessonsPage() {
       alert('Error loading AI course');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchExistingLessons = async () => {
+    try {
+      console.log('📚 Fetching existing AI lessons for course:', aiCourseId);
+      const res = await fetch(`/api/aiLessons?aiCourseId=${aiCourseId}`);
+      const data = await res.json();
+      if (data.success) {
+        console.log('✅ Found', data.data?.length || 0, 'existing lessons');
+        setExistingLessons(data.data || []);
+      } else {
+        console.error('❌ Failed to fetch existing lessons:', data.error);
+      }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('❌ Error fetching existing lessons:', errorMessage);
     }
   };
 
@@ -180,7 +210,8 @@ export default function AddLessonsPage() {
       await Promise.all(lessonPromises);
 
       alert(`Successfully created ${lessons.length} lesson(s) for AI Course!`);
-      router.push(`/dashboard/ai-courses/${aiCourseId}`);
+      // Add a query parameter to trigger refresh on the edit page
+      router.push(`/dashboard/ai-courses/${aiCourseId}?refresh=lessons`);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('Error creating lessons:', errorMessage);
@@ -194,7 +225,7 @@ export default function AddLessonsPage() {
     return (
       <div className="p-8 bg-black">
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
         </div>
       </div>
     );
@@ -202,14 +233,65 @@ export default function AddLessonsPage() {
 
   return (
     <div className="p-8 bg-black">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Add Lessons to AI Mastery Course</h1>
-        <p className="text-zinc-400">AI Course: {aiCourse?.title}</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">Add Lessons to AI Mastery Course</h1>
+        <div className="w-16 h-px bg-white/20 mb-4"></div>
+        <p className="text-sm font-light text-white/60 tracking-wide">AI Course: {aiCourse?.title}</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 p-8 max-w-4xl">
+      {/* Existing Lessons Section */}
+      {existingLessons.length > 0 && (
+        <div className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-4xl mb-6">
+          <div className="mb-4 flex justify-between items-center">
+            <h2 className="text-sm font-light text-white tracking-wider uppercase">
+              Existing Lessons ({existingLessons.length})
+            </h2>
+            <Link
+              href={`/dashboard/ai-courses/${aiCourseId}`}
+              className="px-4 py-2.5.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all font-light text-xs tracking-wider uppercase"
+            >
+              ← Back to Course
+            </Link>
+          </div>
+          <div className="space-y-3">
+            {existingLessons.map((lesson) => (
+              <div
+                key={lesson._id}
+                className="border border-white/10 rounded-sm p-4 bg-white/5 flex items-center justify-between"
+              >
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className="px-2 py-1 bg-zinc-900 text-zinc-300 rounded-lg text-xs font-semibold">
+                      #{lesson.order}
+                    </span>
+                    <h3 className="text-lg font-bold text-white">{lesson.title}</h3>
+                    {lesson.isInteractive && (
+                      <span className="px-2 py-1 bg-white text-black rounded-lg text-xs font-semibold">
+                        Interactive
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-white/40 text-sm line-clamp-2">{lesson.content}</p>
+                </div>
+                <div className="flex gap-2 ml-4">
+                  <Link
+                    href={`/dashboard/ai-lessons/${lesson._id}/view`}
+                    className="px-4 py-2.5 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all font-semibold text-sm"
+                  >
+                    👁️ View
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="bg-black/40 rounded-sm border border-white/10 p-8 max-w-4xl">
         <div className="mb-6 flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-white">Lessons</h2>
+          <h2 className="text-sm font-light text-white tracking-wider uppercase">
+            {existingLessons.length > 0 ? 'Add New Lessons' : 'Lessons'}
+          </h2>
           <button
             type="button"
             onClick={addLesson}
@@ -221,7 +303,7 @@ export default function AddLessonsPage() {
 
         {lessons.length === 0 ? (
           <div className="text-center py-12 bg-zinc-800 rounded-xl border border-zinc-700 border-dashed">
-            <p className="text-zinc-400 mb-4">No lessons added yet</p>
+            <p className="text-white/40 mb-4">No lessons added yet</p>
             <button
               type="button"
               onClick={addLesson}
@@ -247,7 +329,7 @@ export default function AddLessonsPage() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                       Title *
                     </label>
                     <input
@@ -255,55 +337,55 @@ export default function AddLessonsPage() {
                       required
                       value={lesson.title}
                       onChange={(e) => updateLesson(lessonIndex, 'title', e.target.value)}
-                      className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                      className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                       placeholder="e.g., Introduction to ChatGPT"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">
-                      Content * <span className="text-zinc-400 text-xs">(Main lesson text)</span>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                      Content * <span className="text-white/40 text-xs">(Main lesson text)</span>
                     </label>
                     <textarea
                       required
                       rows={6}
                       value={lesson.content}
                       onChange={(e) => updateLesson(lessonIndex, 'content', e.target.value)}
-                      className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                      className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                       placeholder="Enter lesson content here..."
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">
-                      Media URLs <span className="text-zinc-400 text-xs">(comma-separated)</span>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                      Media URLs <span className="text-white/40 text-xs">(comma-separated)</span>
                     </label>
                     <input
                       type="text"
                       value={lesson.media}
                       onChange={(e) => updateLesson(lessonIndex, 'media', e.target.value)}
-                      className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all"
+                      className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all"
                       placeholder="https://example.com/video.mp4, https://example.com/audio.mp3"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">
-                      Photos <span className="text-zinc-400 text-xs">(Optional - Base64 encoded, comma-separated)</span>
+                    <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
+                      Photos <span className="text-white/40 text-xs">(Optional - Base64 encoded, comma-separated)</span>
                     </label>
                     <textarea
                       rows={3}
                       value={lesson.photos}
                       onChange={(e) => updateLesson(lessonIndex, 'photos', e.target.value)}
-                      className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white transition-all text-xs"
+                      className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20 transition-all text-xs"
                       placeholder="Paste base64 encoded images here (comma-separated if multiple)"
                     />
-                    <p className="text-xs text-zinc-400 mt-1">Upload images and convert to Base64, or leave empty</p>
+                    <p className="text-xs text-white/40 mt-1">Upload images and convert to Base64, or leave empty</p>
                   </div>
 
                   <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">
+                      <label className="block text-xs font-light text-white/60 mb-2 tracking-wider uppercase">
                         Order *
                       </label>
                       <input
@@ -312,7 +394,7 @@ export default function AddLessonsPage() {
                         min="1"
                         value={lesson.order}
                         onChange={(e) => updateLesson(lessonIndex, 'order', parseInt(e.target.value) || 1)}
-                        className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white transition-all"
+                        className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-xl text-white focus:bg-white/10 focus:border-white/20 transition-all"
                       />
                     </div>
 
@@ -350,7 +432,7 @@ export default function AddLessonsPage() {
                         <button
                           type="button"
                           onClick={() => addQuestion(lessonIndex)}
-                          className="px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
+                          className="px-4 py-2.5 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
                         >
                           + Add Question
                         </button>
@@ -373,7 +455,7 @@ export default function AddLessonsPage() {
                             value={q.question}
                             onChange={(e) => updateQuestion(lessonIndex, qIndex, 'question', e.target.value)}
                             placeholder="Question text..."
-                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-zinc-500 mb-3 focus:ring-2 focus:ring-white focus:border-white"
+                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-white/30 mb-3 focus:bg-white/10 focus:border-white/20"
                           />
                           <div className="space-y-2 mb-3">
                             {q.options.map((opt, optIndex) => (
@@ -383,14 +465,14 @@ export default function AddLessonsPage() {
                                 value={opt}
                                 onChange={(e) => updateQuestion(lessonIndex, qIndex, 'option', [optIndex, e.target.value])}
                                 placeholder={`Option ${optIndex + 1}`}
-                                className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white"
+                                className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20"
                               />
                             ))}
                           </div>
                           <select
                             value={q.correctAnswer}
                             onChange={(e) => updateQuestion(lessonIndex, qIndex, 'correctAnswer', parseInt(e.target.value))}
-                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white focus:ring-2 focus:ring-white focus:border-white mb-3"
+                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white focus:bg-white/10 focus:border-white/20 mb-3"
                           >
                             <option value={0}>Option 1 is correct</option>
                             <option value={1}>Option 2 is correct</option>
@@ -402,7 +484,7 @@ export default function AddLessonsPage() {
                             value={q.explanation || ''}
                             onChange={(e) => updateQuestion(lessonIndex, qIndex, 'explanation', e.target.value)}
                             placeholder="Explanation (optional)"
-                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-white"
+                            className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-xl text-white placeholder-white/30 focus:bg-white/10 focus:border-white/20"
                           />
                         </div>
                       ))}
@@ -418,7 +500,7 @@ export default function AddLessonsPage() {
           <button
             type="submit"
             disabled={saving || lessons.length === 0}
-            className="px-8 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+            className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Creating Lessons...' : `Create ${lessons.length} Lesson(s)`}
           </button>
