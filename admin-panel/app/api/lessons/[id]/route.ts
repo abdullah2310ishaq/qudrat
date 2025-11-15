@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Lesson from '@/lib/db/models/Lesson';
+import Course from '@/lib/db/models/Course'; // Import to ensure model is registered for populate
+
+// Ensure models are registered before use (production fix)
+if (typeof Course !== 'undefined') {
+  // Model is registered
+}
 
 // GET /api/lessons/:id - Get single lesson
 export async function GET(
@@ -11,7 +17,13 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
-    const lesson = await Lesson.findById(id).populate('courseId');
+    // Ensure Course model is registered before populate (production fix)
+    const courseModelName = Course.modelName || 'Course';
+    
+    const lesson = await Lesson.findById(id).populate({
+      path: 'courseId',
+      model: courseModelName, // Use model name string for production compatibility
+    });
 
     if (!lesson) {
       return NextResponse.json(

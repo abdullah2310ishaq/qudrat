@@ -5,22 +5,27 @@ import AILesson from '@/lib/db/models/AILesson'; // Import to ensure model is re
 import Prompt from '@/lib/db/models/Prompt'; // Import to ensure model is registered for populate
 import Certificate from '@/lib/db/models/Certificate'; // Import to ensure model is registered for populate
 
-// Ensure models are registered before use (production fix)
-// This forces the models to be registered with Mongoose
-if (typeof AILesson !== 'undefined') {
-  // Model is registered
-}
-if (typeof Prompt !== 'undefined') {
-  // Model is registered
-}
-if (typeof Certificate !== 'undefined') {
-  // Model is registered
-}
+// Force model registration at module load (production fix for serverless)
+// Accessing modelName forces Mongoose to register the model
+void AILesson.modelName;
+void Prompt.modelName;
+void Certificate?.modelName;
+void AICourse.modelName;
 
 // GET /api/aiCourses - Fetch all AI mastery courses
 export async function GET(request: NextRequest) {
   try {
+    // Ensure DB connection and models are ready
     await connectDB();
+
+    // Double-check model registration after connection
+    if (!AILesson.modelName) {
+      console.error('❌ AILesson model not registered!');
+      return NextResponse.json(
+        { success: false, error: 'Model registration failed' },
+        { status: 500 }
+      );
+    }
 
     const { searchParams } = new URL(request.url);
     const isActive = searchParams.get('isActive');
@@ -53,7 +58,6 @@ export async function GET(request: NextRequest) {
     console.log(`📊 Total AI Courses found: ${total}`);
 
     // Ensure AILesson model is registered before populate (production fix)
-    // Access modelName to force registration
     const ailessonModelName = AILesson.modelName || 'AILesson';
     const promptModelName = Prompt.modelName || 'Prompt';
     
@@ -93,7 +97,12 @@ export async function GET(request: NextRequest) {
     console.error('❌ Error fetching AI courses:', error);
     if (error instanceof Error) {
       console.error('Error stack:', error.stack);
+      // Check if it's a model registration error
+      if (message.includes('Schema hasn\'t been registered') || message.includes('model')) {
+        console.error('🔴 Model registration error detected!');
+      }
     }
+    // Return 500 instead of 404 for server errors
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

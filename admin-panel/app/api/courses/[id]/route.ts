@@ -3,6 +3,11 @@ import connectDB from '@/lib/db/connect';
 import Course from '@/lib/db/models/Course';
 import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
 
+// Ensure models are registered before use (production fix)
+if (typeof Lesson !== 'undefined') {
+  // Model is registered
+}
+
 // GET /api/courses/:id - Fetch single course
 export async function GET(
   request: NextRequest,
@@ -14,7 +19,15 @@ export async function GET(
 
     console.log(`🔍 Fetching course with ID: ${id}`);
 
-    const course = await Course.findById(id).populate('lessons');
+    // Ensure Lesson model is registered before populate (production fix)
+    // Access modelName to force registration
+    const lessonModelName = Lesson.modelName || 'Lesson';
+    console.log(`📋 Using model: Lesson=${lessonModelName}`);
+
+    const course = await Course.findById(id).populate({
+      path: 'lessons',
+      model: lessonModelName, // Use model name string for production compatibility
+    });
 
     if (!course) {
       console.log(`❌ Course not found: ${id}`);

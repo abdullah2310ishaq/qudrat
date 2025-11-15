@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Prompt from '@/lib/db/models/Prompt';
+import Course from '@/lib/db/models/Course'; // Import to ensure model is registered for populate
+
+// Ensure models are registered before use (production fix)
+if (typeof Course !== 'undefined') {
+  // Model is registered
+}
 
 // GET /api/prompts/:id - Fetch single prompt
 export async function GET(
@@ -11,7 +17,13 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
-    const prompt = await Prompt.findById(id).populate('relatedCourseId');
+    // Ensure Course model is registered before populate (production fix)
+    const courseModelName = Course.modelName || 'Course';
+    
+    const prompt = await Prompt.findById(id).populate({
+      path: 'relatedCourseId',
+      model: courseModelName, // Use model name string for production compatibility
+    });
 
     if (!prompt) {
       return NextResponse.json(

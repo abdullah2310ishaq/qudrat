@@ -1,13 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Course from '@/lib/db/models/Course';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Lesson from '@/lib/db/models/Lesson'; // Import to ensure model is registered for populate
+
+// Force model registration at module load (production fix for serverless)
+// Accessing modelName forces Mongoose to register the model
+void Lesson.modelName;
+void Course.modelName;
 
 // GET /api/courses - Fetch all courses
 export async function GET(request: NextRequest) {
   try {
+    // Ensure DB connection and models are ready
     await connectDB();
+    
+    // Double-check model registration after connection
+    if (!Lesson.modelName) {
+      console.error('❌ Lesson model not registered!');
+      return NextResponse.json(
+        { success: false, error: 'Model registration failed' },
+        { status: 500 }
+      );
+    }
     
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type');
@@ -36,8 +50,15 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
     const total = await Course.countDocuments(query);
 
+    // Ensure Lesson model is registered before populate (production fix)
+    const lessonModelName = Lesson.modelName || 'Lesson';
+    console.log(`📋 Using model: Lesson=${lessonModelName}, Total courses: ${total}`);
+
     const courses = await Course.find(query)
-      .populate('lessons')
+      .populate({
+        path: 'lessons',
+        model: lessonModelName, // Use model name string for production compatibility
+      })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
@@ -62,7 +83,12 @@ export async function GET(request: NextRequest) {
     console.error('❌ Error fetching courses:', error);
     if (error instanceof Error) {
       console.error('Error stack:', error.stack);
+      // Check if it's a model registration error
+      if (message.includes('Schema hasn\'t been registered') || message.includes('model')) {
+        console.error('🔴 Model registration error detected!');
+      }
     }
+    // Return 500 instead of 404 for server errors
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }
