@@ -19,28 +19,29 @@ export default function PromptsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState({ tool: '', category: '' });
 
-  useEffect(() => {
-    const fetchPrompts = async () => {
-      try {
-        let url = '/api/prompts';
-        const params = new URLSearchParams();
-        if (filter.tool) params.append('tool', filter.tool);
-        if (filter.category) params.append('category', filter.category);
-        if (params.toString()) url += '?' + params.toString();
+  const fetchPrompts = async () => {
+    try {
+      setLoading(true);
+      let url = '/api/prompts';
+      const params = new URLSearchParams();
+      if (filter.tool) params.append('tool', filter.tool);
+      if (filter.category) params.append('category', filter.category);
+      if (params.toString()) url += '?' + params.toString();
 
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.success) {
-          setPrompts(data.data || []);
-        }
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        console.error('Error fetching prompts:', errorMessage);
-      } finally {
-        setLoading(false);
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data.success) {
+        setPrompts(data.data || []);
       }
-    };
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Error fetching prompts:', errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPrompts();
   }, [filter]);
 
