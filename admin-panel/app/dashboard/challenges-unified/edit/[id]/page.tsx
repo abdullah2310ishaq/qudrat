@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useToast } from '@/components/Toast';
 
@@ -48,14 +49,7 @@ export default function EditChallengePage() {
   });
   const [days, setDays] = useState<ChallengeDay[]>([]);
 
-  useEffect(() => {
-    if (challengeId) {
-      fetchChallenge();
-      fetchDays();
-    }
-  }, [challengeId]);
-
-  const fetchChallenge = async () => {
+  const fetchChallenge = useCallback(async () => {
     try {
       const res = await fetch(`/api/challenges/${challengeId}`);
       const data = await res.json();
@@ -67,9 +61,9 @@ export default function EditChallengePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [challengeId]);
 
-  const fetchDays = async () => {
+  const fetchDays = useCallback(async () => {
     try {
       const res = await fetch(`/api/challengeDays?challengeId=${challengeId}`);
       const data = await res.json();
@@ -80,7 +74,14 @@ export default function EditChallengePage() {
     } catch (error) {
       console.error('Error fetching days:', error);
     }
-  };
+  }, [challengeId]);
+
+  useEffect(() => {
+    if (challengeId) {
+      fetchChallenge();
+      fetchDays();
+    }
+  }, [challengeId, fetchChallenge, fetchDays]);
 
   const generateMissingDays = () => {
     const existingDays = days.map(d => d.day);
@@ -118,10 +119,12 @@ export default function EditChallengePage() {
     toast.success(`Added Day ${nextDay}`);
   };
 
-  const updateDay = (dayIndex: number, field: keyof ChallengeDay, value: string | number | string[] | Question[]) => {
-    const newDays = [...days];
-    (newDays[dayIndex] as any)[field] = value;
-    setDays(newDays);
+  const updateDay = <K extends keyof ChallengeDay>(dayIndex: number, field: K, value: ChallengeDay[K]) => {
+    setDays(prevDays => {
+      const nextDays = [...prevDays];
+      nextDays[dayIndex] = { ...nextDays[dayIndex], [field]: value } as ChallengeDay;
+      return nextDays;
+    });
   };
 
   const handleDayImageUpload = (dayIndex: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,12 +189,19 @@ export default function EditChallengePage() {
     setDays(newDays);
   };
 
-  const updateQuestionInDay = (dayIndex: number, questionIndex: number, field: keyof Question, value: string | number | string[]) => {
-    const newDays = [...days];
-    const questions = [...(newDays[dayIndex].questions || [])];
-    (questions[questionIndex] as any)[field] = value;
-    newDays[dayIndex].questions = questions;
-    setDays(newDays);
+  const updateQuestionInDay = <K extends keyof Question>(
+    dayIndex: number,
+    questionIndex: number,
+    field: K,
+    value: Question[K],
+  ) => {
+    setDays(prevDays => {
+      const nextDays = [...prevDays];
+      const questions = [...(nextDays[dayIndex].questions || [])];
+      questions[questionIndex] = { ...questions[questionIndex], [field]: value } as Question;
+      nextDays[dayIndex] = { ...nextDays[dayIndex], questions };
+      return nextDays;
+    });
   };
 
   const removeQuestionFromDay = (dayIndex: number, questionIndex: number) => {
@@ -480,7 +490,7 @@ export default function EditChallengePage() {
                 <div className="text-center py-6 bg-cream-50 rounded border border-dashed border-black/20">
                   <div className="text-3xl mb-2">📅</div>
                   <p className="text-black/70 text-xs mb-1 font-semibold">No days added yet</p>
-                  <p className="text-black/50 text-xs mb-3">Click "Generate Missing" or "Add Day" to start</p>
+                  <p className="text-black/50 text-xs mb-3">Click Generate Missing or Add Day to start</p>
                   <button
                     type="button"
                     onClick={generateMissingDays}
@@ -546,7 +556,13 @@ export default function EditChallengePage() {
                         <div className="flex gap-1 mb-2 flex-wrap">
                           {day.photos.map((photo, photoIdx) => (
                             <div key={photoIdx} className="relative">
-                              <img src={photo} alt={`Day ${day.day} Image ${photoIdx + 1}`} className="w-16 h-16 object-cover rounded border border-black/20" />
+                              <Image
+                                src={photo}
+                                alt={`Day ${day.day} Image ${photoIdx + 1}`}
+                                width={64}
+                                height={64}
+                                className="w-16 h-16 object-cover rounded border border-black/20"
+                              />
                               <button
                                 type="button"
                                 onClick={() => {

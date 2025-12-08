@@ -51,7 +51,8 @@ export default function AddChallengePage() {
 
   const updateDay = (dayIndex: number, field: keyof ChallengeDayForm, value: string | number | string[] | Question[]) => {
     const newDays = [...days];
-    (newDays[dayIndex] as any)[field] = value;
+    const day = newDays[dayIndex];
+    newDays[dayIndex] = { ...day, [field]: value };
     setDays(newDays);
   };
 
@@ -110,10 +111,16 @@ export default function AddChallengePage() {
     setDays(newDays);
   };
 
-  const updateQuestionInDay = (dayIndex: number, questionIndex: number, field: keyof Question, value: string | number | string[]) => {
+  const updateQuestionInDay = (
+    dayIndex: number,
+    questionIndex: number,
+    field: keyof Question,
+    value: string | number | string[],
+  ) => {
     const newDays = [...days];
     const questions = [...newDays[dayIndex].questions];
-    (questions[questionIndex] as any)[field] = value;
+    const question = questions[questionIndex];
+    questions[questionIndex] = { ...question, [field]: value };
     newDays[dayIndex].questions = questions;
     setDays(newDays);
   };
@@ -338,7 +345,7 @@ export default function AddChallengePage() {
                 <div className="text-center py-6 bg-cream-50 rounded border border-dashed border-black/20">
                   <div className="text-3xl mb-2">📅</div>
                   <p className="text-black/70 text-xs mb-1 font-semibold">No days generated yet</p>
-                  <p className="text-black/50 text-xs mb-3">Set duration and click "Generate Days" to create daily content</p>
+                  <p className="text-black/50 text-xs mb-3">Set duration and click Generate Days to create daily content</p>
                   <button
                     type="button"
                     onClick={generateDays}

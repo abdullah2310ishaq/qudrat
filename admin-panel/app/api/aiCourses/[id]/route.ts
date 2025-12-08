@@ -147,8 +147,9 @@ export async function PUT(
               console.warn(`⚠️ Invalid lesson ID: ${lessonId}`);
               return null;
             })
-            .filter((id: mongoose.Types.ObjectId | null) => id !== null);
-          console.log(`📚 Level ${level.level} (${level.topic}): ${processedLevel.lessons.length} valid lesson(s)`);
+            .filter((id: mongoose.Types.ObjectId | null) => id !== null) as mongoose.Types.ObjectId[];
+          const lessonsCount = Array.isArray(processedLevel.lessons) ? processedLevel.lessons.length : 0;
+          console.log(`📚 Level ${level.level} (${level.topic}): ${lessonsCount} valid lesson(s)`);
         } else {
           processedLevel.lessons = [];
         }

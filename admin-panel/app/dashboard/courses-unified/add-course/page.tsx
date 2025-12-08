@@ -140,7 +140,7 @@ export default function AddCoursePage() {
                 <option value="simple">📚 Simple Course</option>
                 <option value="challenge">🎯 Challenge Course</option>
               </select>
-              <p className="text-black/60 text-xs mt-0.5">Choose the type of course you're creating</p>
+              <p className="text-black/60 text-xs mt-0.5">Choose the type of course you are creating</p>
             </div>
 
             <div>

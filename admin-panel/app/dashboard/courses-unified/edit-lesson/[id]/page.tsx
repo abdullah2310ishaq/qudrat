@@ -365,7 +365,7 @@ export default function EditLessonPage() {
                 {lessonForm.questions.length === 0 ? (
                   <div className="text-center py-6 bg-cream-50 rounded border border-dashed border-black/20">
                     <p className="text-black/60 text-xs mb-1">No questions added yet</p>
-                    <p className="text-black/50 text-xs">Click "+ Add Question" to create quiz questions</p>
+                    <p className="text-black/50 text-xs">Click + Add Question to create quiz questions</p>
                   </div>
                 ) : (
                   <div className="space-y-2">

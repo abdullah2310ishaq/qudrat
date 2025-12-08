@@ -91,7 +91,8 @@ export default function AddAICoursePage() {
 
   const updateLevel = (index: number, field: keyof TreeLevel, value: string | boolean) => {
     const newTree = [...courseForm.tree];
-    (newTree[index] as any)[field] = value;
+    const level = newTree[index];
+    newTree[index] = { ...level, [field]: value };
     setCourseForm({ ...courseForm, tree: newTree });
   };
 
@@ -119,10 +120,16 @@ export default function AddAICoursePage() {
     setCourseForm({ ...courseForm, tree: newTree });
   };
 
-  const updateLessonInLevel = (levelIndex: number, lessonIndex: number, field: keyof LessonForm, value: string | number | boolean | string[]) => {
+  const updateLessonInLevel = (
+    levelIndex: number,
+    lessonIndex: number,
+    field: keyof LessonForm,
+    value: string | number | boolean | string[],
+  ) => {
     const newTree = [...courseForm.tree];
     const level = newTree[levelIndex];
-    (level.lessons[lessonIndex] as any)[field] = value;
+    const lesson = level.lessons[lessonIndex];
+    level.lessons[lessonIndex] = { ...lesson, [field]: value };
     setCourseForm({ ...courseForm, tree: newTree });
   };
 
@@ -450,6 +457,7 @@ export default function AddAICoursePage() {
               </label>
               {courseForm.coverImage && (
                 <div className="mt-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={courseForm.coverImage} alt="Preview" className="max-w-xs rounded border border-black/20 shadow-sm" />
                   <button
                     type="button"
@@ -496,7 +504,7 @@ export default function AddAICoursePage() {
                 <div className="text-center py-8 bg-cream-50 rounded border border-dashed border-black/20">
                   <div className="text-3xl mb-2">📚</div>
                   <p className="text-black/70 text-xs mb-1 font-semibold">No levels added yet</p>
-                  <p className="text-black/50 text-xs mb-3">Click "+ Add Level" to start building the structure</p>
+                  <p className="text-black/50 text-xs mb-3">Click + Add Level to start building the structure</p>
                   <button
                     type="button"
                     onClick={addLevel}
@@ -563,7 +571,7 @@ export default function AddAICoursePage() {
                             {level.lessons.length === 0 ? (
                               <div className="text-center py-4 bg-white/50 rounded border border-dashed border-black/20">
                                 <p className="text-black/60 text-xs mb-1">No lessons yet</p>
-                                <p className="text-black/50 text-xs">Click "+ Add Lesson" to add your first lesson</p>
+                                <p className="text-black/50 text-xs">Click + Add Lesson to add your first lesson</p>
                               </div>
                             ) : (
                               <div className="space-y-2">
@@ -633,6 +641,7 @@ export default function AddAICoursePage() {
                                           <div className="flex gap-1 mt-1 flex-wrap">
                                             {lesson.photos.map((photo, photoIdx) => (
                                               <div key={photoIdx} className="relative">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img src={photo} alt={`Preview ${photoIdx + 1}`} className="w-16 h-16 object-cover rounded border border-black/20" />
                                                 <button
                                                   type="button"

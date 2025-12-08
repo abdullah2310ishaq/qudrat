@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useToast } from '@/components/Toast';
@@ -11,6 +11,22 @@ interface Course {
 }
 
 export default function AddLessonPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-8 min-h-screen" style={{ backgroundColor: '#F5F5DC' }}>
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-black/20 border-t-black"></div>
+          </div>
+        </div>
+      }
+    >
+      <AddLessonPageContent />
+    </Suspense>
+  );
+}
+
+function AddLessonPageContent() {
   const router = useRouter();
   const toast = useToast();
   const searchParams = useSearchParams();
@@ -55,6 +71,8 @@ export default function AddLessonPage() {
     if (lessonForm.courseId) {
       fetchLessonCount();
     }
+    // fetchLessonCount depends on the latest courseId only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonForm.courseId]);
 
   const fetchLessonCount = async () => {
@@ -366,7 +384,7 @@ export default function AddLessonPage() {
                 {lessonForm.questions.length === 0 ? (
                   <div className="text-center py-6 bg-cream-50 rounded border border-dashed border-black/20">
                     <p className="text-black/60 text-xs mb-1">No questions added yet</p>
-                    <p className="text-black/50 text-xs">Click "+ Add Question" to create quiz questions</p>
+                    <p className="text-black/50 text-xs">Click + Add Question to create quiz questions</p>
                   </div>
                 ) : (
                   <div className="space-y-2">

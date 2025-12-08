@@ -44,9 +44,9 @@ export default function DashboardLayout({
             <NavLink href="/dashboard/users" isActive={pathname?.startsWith('/dashboard/users')}>
               <span className="mr-3 text-sm opacity-70"></span> Users
             </NavLink>
-            <NavLink href="/dashboard/payment" isActive={pathname?.startsWith('/dashboard/payment')}>
+            {/* <NavLink href="/dashboard/payment" isActive={pathname?.startsWith('/dashboard/payment')}>
               <span className="mr-3 text-sm opacity-70"></span> Payment
-            </NavLink>
+            </NavLink> */}
           </nav>  
         </aside>
 
