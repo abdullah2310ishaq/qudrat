@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
+//do osmehting dgood
 interface User {
   _id: string;
   name: string;
