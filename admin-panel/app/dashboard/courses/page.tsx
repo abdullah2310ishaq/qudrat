@@ -256,7 +256,7 @@ export default function CoursesPage() {
                         Edit
                       </Link>
                       <Link
-                        href={`/dashboard/courses/${course._id}/add-lessons`}
+                        href={`/dashboard/lessons/manage?courseId=${course._id}`}
                         className="text-white/60 hover:text-white transition-colors text-xs tracking-wide"
                       >
                         Lessons

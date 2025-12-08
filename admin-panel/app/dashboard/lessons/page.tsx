@@ -63,7 +63,7 @@ export default function LessonsPage() {
           <p className="text-sm font-light text-white/60 tracking-wide">Manage all lessons across courses</p>
         </div>
         <Link
-          href="/dashboard/lessons/new"
+          href="/dashboard/lessons/manage"
           className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
         >
           + Create Lesson
@@ -79,7 +79,7 @@ export default function LessonsPage() {
           <div className="text-5xl mb-4 opacity-70">📖</div>
           <p className="text-sm font-light text-white/60 mb-6 tracking-wide">No lessons found</p>
           <Link
-            href="/dashboard/lessons/new"
+            href="/dashboard/lessons/manage"
             className="inline-block px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
           >
             Create your first lesson

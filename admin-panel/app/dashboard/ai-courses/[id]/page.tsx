@@ -318,7 +318,7 @@ export default function EditAICoursePage() {
           <p className="text-sm font-light text-white/60 tracking-wide">Update mastery path structure and levels</p>
         </div>
         <Link
-          href={`/dashboard/ai-courses/${courseId}/add-lessons`}
+          href={`/dashboard/lessons/manage?aiCourseId=${courseId}`}
           className="px-6 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
         >
           + Add Lessons
@@ -505,7 +505,7 @@ export default function EditAICoursePage() {
                               🔄 Refresh
                             </button>
                             <Link
-                              href={`/dashboard/ai-courses/${courseId}/add-lessons`}
+                              href={`/dashboard/lessons/manage?aiCourseId=${courseId}`}
                               className="text-xs px-3 py-1 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all font-light text-xs tracking-wider uppercase"
                             >
                               + Add Lessons
@@ -519,7 +519,7 @@ export default function EditAICoursePage() {
                               You need to create AI lessons first before you can assign them to levels.
                             </p>
                             <Link
-                              href={`/dashboard/ai-courses/${courseId}/add-lessons`}
+                              href={`/dashboard/lessons/manage?aiCourseId=${courseId}`}
                               className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-all font-semibold inline-block shadow-lg hover:shadow-xl transform hover:scale-105"
                             >
                               ➕ Create AI Lessons

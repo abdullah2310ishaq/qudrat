@@ -136,7 +136,7 @@ export default function AICoursesPage() {
                   Edit
                 </Link>
                 <Link
-                  href={`/dashboard/ai-courses/${course._id}/add-lessons`}
+                  href={`/dashboard/lessons/manage?aiCourseId=${course._id}`}
                   className="flex-1 text-center px-3 py-2 bg-white/5 text-white rounded-sm hover:bg-white/10 text-xs font-light tracking-wide border border-white/10 hover:border-white/20 transition-all"
                 >
                   Lessons

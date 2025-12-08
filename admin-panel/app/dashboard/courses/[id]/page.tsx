@@ -268,7 +268,7 @@ export default function EditCoursePage() {
                 </div>
               </div>
               <Link
-                href={`/dashboard/courses/${courseId}/add-lessons`}
+                href={`/dashboard/lessons/manage?courseId=${courseId}`}
                 className="px-4 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all font-light text-xs tracking-wider uppercase"
               >
                 + Add Lessons
@@ -279,7 +279,7 @@ export default function EditCoursePage() {
               <div className="text-center py-8 border border-white/10 border-dashed rounded-sm bg-white/5">
                 <p className="text-white/60 mb-4 font-light text-sm">No lessons added yet</p>
                 <Link
-                  href={`/dashboard/courses/${courseId}/add-lessons`}
+                  href={`/dashboard/lessons/manage?courseId=${courseId}`}
                   className="inline-block px-4 py-2.5 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all font-light text-xs tracking-wider uppercase"
                 >
                   Add First Lesson
@@ -319,7 +319,7 @@ export default function EditCoursePage() {
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
             <Link
-              href={`/dashboard/lessons/new?courseId=${courseId}`}
+              href={`/dashboard/lessons/manage?courseId=${courseId}`}
               className="px-8 py-3 bg-white/5 text-white rounded-sm border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 font-light text-sm tracking-wider uppercase"
             >
               Add Lessons

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import connectDB from '@/lib/db/connect';
 import AICourse from '@/lib/db/models/AICourse';
 import AILesson from '@/lib/db/models/AILesson'; // Import to ensure model is registered for populate
@@ -118,8 +119,6 @@ export async function PUT(
     
     // IMPORTANT: Process tree structure with proper ObjectId conversion
     if (body.tree && Array.isArray(body.tree)) {
-      const mongoose = (await import('mongoose')).default;
-      
       updateData.tree = body.tree.map((level: { 
         level: number; 
         topic: string; 

@@ -171,7 +171,7 @@ export default function NewAICoursePage() {
       const data = await res.json();
       if (data.success) {
         // Redirect to add lessons page so user can immediately create lessons
-        router.push(`/dashboard/ai-courses/${data.data._id}/add-lessons`);
+        router.push(`/dashboard/lessons/manage?aiCourseId=${data.data._id}`);
       } else {
         alert('Error creating AI course: ' + data.error);
       }

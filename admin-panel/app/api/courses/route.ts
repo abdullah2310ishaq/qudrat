@@ -96,6 +96,13 @@ export async function GET(request: NextRequest) {
   }
 }
 
+// Helper function to validate base64 image
+function isValidBase64Image(base64: string): boolean {
+  if (!base64 || typeof base64 !== 'string') return false;
+  const imageRegex = /^data:image\/(jpeg|jpg|png|gif|webp|svg\+xml);base64,/i;
+  return imageRegex.test(base64);
+}
+
 // POST /api/courses - Add a new course
 export async function POST(request: NextRequest) {
   try {
@@ -111,19 +118,44 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate photo if provided
+    let processedPhoto: string | undefined = undefined;
+    if (photo) {
+      if (isValidBase64Image(photo)) {
+        processedPhoto = photo;
+      } else {
+        return NextResponse.json(
+          { success: false, error: 'Invalid photo format. Must be a base64 encoded image.' },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Validate lessons array
+    let processedLessons: string[] = [];
+    if (lessons && Array.isArray(lessons)) {
+      processedLessons = lessons.filter((lessonId: any) => {
+        return lessonId && (typeof lessonId === 'string' || typeof lessonId === 'object');
+      });
+    }
+
     const course = await Course.create({
-      title,
-      heading,
-      subHeading,
+      title: title.trim(),
+      heading: heading.trim(),
+      subHeading: subHeading ? subHeading.trim() : undefined,
       type,
-      category: category || 'General',
-      lessons: lessons || [],
-      photo: photo || undefined, // Base64 encoded photo (optional)
+      category: category ? category.trim() : 'General',
+      lessons: processedLessons,
+      photo: processedPhoto,
       isActive: isActive !== undefined ? isActive : true,
     });
 
     return NextResponse.json(
-      { success: true, data: course },
+      { 
+        success: true, 
+        data: course,
+        message: 'Course created successfully'
+      },
       { status: 201 }
     );
   } catch (error: unknown) {

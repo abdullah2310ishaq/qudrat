@@ -32,7 +32,7 @@ export default function NewCoursePage() {
       if (data.success) {
         alert('Course created successfully! Redirecting to add lessons...');
         // Redirect to add lessons page for this course
-        router.push(`/dashboard/courses/${data.data._id}/add-lessons`);
+        router.push(`/dashboard/lessons/manage?courseId=${data.data._id}`);
       } else {
         alert('Error creating course: ' + data.error);
       }

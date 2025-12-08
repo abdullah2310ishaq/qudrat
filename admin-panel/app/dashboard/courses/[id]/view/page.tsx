@@ -224,7 +224,7 @@ export default function ViewCoursePage() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-white">Lessons ({sortedLessons.length})</h2>
               <Link
-                href={`/dashboard/courses/${courseId}/add-lessons`}
+                href={`/dashboard/lessons/manage?courseId=${courseId}`}
                 className="px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
               >
                 + Add Lessons
@@ -235,7 +235,7 @@ export default function ViewCoursePage() {
               <div className="text-center py-12 bg-zinc-800 rounded-xl border border-zinc-700 border-dashed">
                 <p className="text-zinc-400 mb-4">No lessons added yet</p>
                 <Link
-                  href={`/dashboard/courses/${courseId}/add-lessons`}
+                  href={`/dashboard/lessons/manage?courseId=${courseId}`}
                   className="inline-block px-4 py-2 bg-white text-black rounded-xl hover:bg-zinc-200 text-sm font-semibold"
                 >
                   Add First Lesson
@@ -322,13 +322,13 @@ export default function ViewCoursePage() {
                 ✏️ Edit Course
               </Link>
               <Link
-                href={`/dashboard/courses/${courseId}/add-lessons`}
+                href={`/dashboard/lessons/manage?courseId=${courseId}`}
                 className="block w-full px-4 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all font-semibold text-center border border-zinc-700"
               >
                 ➕ Add Lessons
               </Link>
               <Link
-                href={`/dashboard/lessons/new?courseId=${courseId}`}
+                href={`/dashboard/lessons/manage?courseId=${courseId}`}
                 className="block w-full px-4 py-3 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-all font-semibold text-center border border-zinc-700"
               >
                 📖 Create Lesson
