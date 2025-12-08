@@ -24,30 +24,30 @@ export default function DashboardLayout({
           </div>
           <nav className="p-4 space-y-1">
             <NavLink href="/dashboard" isActive={pathname === '/dashboard'}>
-              <span className="mr-3 text-sm opacity-70">📊</span> Dashboard
+              <span className="mr-3 text-sm opacity-70"></span> Dashboard
             </NavLink>
             <NavLink href="/dashboard/courses-unified" isActive={pathname?.startsWith('/dashboard/courses-unified')}>
-              <span className="mr-3 text-sm opacity-70">📚</span> Courses & Lessons
+              <span className="mr-3 text-sm opacity-70"></span> Courses & Lessons
             </NavLink>
-            <NavLink href="/dashboard/ai-courses" isActive={pathname?.startsWith('/dashboard/ai-courses')}>
-              <span className="mr-3 text-sm opacity-70">🤖</span> AI Mastery Paths
+            <NavLink href="/dashboard/ai-courses-unified" isActive={pathname?.startsWith('/dashboard/ai-courses-unified')}>
+              <span className="mr-3 text-sm opacity-70"></span> AI Mastery Paths
             </NavLink>
-            <NavLink href="/dashboard/challenges" isActive={pathname?.startsWith('/dashboard/challenges')}>
-              <span className="mr-3 text-sm opacity-70">🎯</span> Challenges
+            <NavLink href="/dashboard/challenges-unified" isActive={pathname?.startsWith('/dashboard/challenges-unified')}>
+              <span className="mr-3 text-sm opacity-70"></span> Challenges
             </NavLink>
-            <NavLink href="/dashboard/prompts" isActive={pathname?.startsWith('/dashboard/prompts')}>
-              <span className="mr-3 text-sm opacity-70">💡</span> Prompts
+            <NavLink href="/dashboard/prompts-unified" isActive={pathname?.startsWith('/dashboard/prompts-unified')}>
+              <span className="mr-3 text-sm opacity-70"></span> Prompts
             </NavLink>
-            <NavLink href="/dashboard/certificates" isActive={pathname?.startsWith('/dashboard/certificates')}>
-              <span className="mr-3 text-sm opacity-70">🏆</span> Certificates
-            </NavLink>
+            {/* <NavLink href="/dashboard/certificates" isActive={pathname?.startsWith('/dashboard/certificates')}>
+              <span className="mr-3 text-sm opacity-70"></span> Certificates
+            </NavLink> */}
             <NavLink href="/dashboard/users" isActive={pathname?.startsWith('/dashboard/users')}>
-              <span className="mr-3 text-sm opacity-70">👥</span> Users
+              <span className="mr-3 text-sm opacity-70"></span> Users
             </NavLink>
             <NavLink href="/dashboard/payment" isActive={pathname?.startsWith('/dashboard/payment')}>
-              <span className="mr-3 text-sm opacity-70">💳</span> Payment
+              <span className="mr-3 text-sm opacity-70"></span> Payment
             </NavLink>
-          </nav>
+          </nav>  
         </aside>
 
         {/* Main Content */}

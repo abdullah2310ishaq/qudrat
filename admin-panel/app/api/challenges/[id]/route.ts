@@ -68,7 +68,7 @@ export async function PUT(
   }
 }
 
-// DELETE /api/challenges/:id - Delete challenge
+// DELETE /api/challenges/:id - Delete challenge and associated days
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -77,17 +77,24 @@ export async function DELETE(
     await connectDB();
     const { id } = await params;
 
-    const challenge = await Challenge.findByIdAndDelete(id);
-
+    // Find the challenge first
+    const challenge = await Challenge.findById(id);
     if (!challenge) {
       return NextResponse.json(
         { success: false, error: 'Challenge not found' },
         { status: 404 }
       );
-  }
+    }
+
+    // Delete all challenge days associated with this challenge
+    const ChallengeDay = (await import('@/lib/db/models/ChallengeDay')).default;
+    await ChallengeDay.deleteMany({ challengeId: id });
+
+    // Delete the challenge
+    await Challenge.findByIdAndDelete(id);
 
     return NextResponse.json(
-      { success: true, message: 'Challenge deleted successfully' },
+      { success: true, message: 'Challenge and associated days deleted successfully' },
       { status: 200 }
     );
   } catch (error: unknown) {

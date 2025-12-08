@@ -41,9 +41,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { challengeId, day, content, photos, media, questions } = body;
 
-    if (!challengeId || !day || !content) {
+    if (!challengeId || day === undefined) {
       return NextResponse.json(
-        { success: false, error: 'challengeId, day, and content are required' },
+        { success: false, error: 'challengeId and day are required' },
         { status: 400 }
       );
     }
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     const challengeDay = await ChallengeDay.create({
       challengeId,
       day: parseInt(day, 10),
-      content,
+      content: content || '', // Allow empty content
       photos: photos || [],
       media: media || [],
       questions: questions || [],

@@ -224,7 +224,7 @@ export async function PUT(
   }
 }
 
-// DELETE /api/aiCourses/:id - Delete AI mastery course
+// DELETE /api/aiCourses/:id - Delete AI mastery course and associated lessons
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -233,8 +233,8 @@ export async function DELETE(
     await connectDB();
     const { id } = await params;
 
-    const aiCourse = await AICourse.findByIdAndDelete(id);
-
+    // Find the course first
+    const aiCourse = await AICourse.findById(id);
     if (!aiCourse) {
       return NextResponse.json(
         { success: false, error: 'AI Course not found' },
@@ -242,8 +242,14 @@ export async function DELETE(
       );
     }
 
+    // Delete all lessons associated with this AI course
+    await AILesson.deleteMany({ aiCourseId: id });
+
+    // Delete the AI course
+    await AICourse.findByIdAndDelete(id);
+
     return NextResponse.json(
-      { success: true, message: 'AI Course deleted successfully' },
+      { success: true, message: 'AI Course and associated lessons deleted successfully' },
       { status: 200 }
     );
   } catch (error: unknown) {
