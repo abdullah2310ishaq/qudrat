@@ -13,14 +13,14 @@ export default function DashboardLayout({
 
   return (
     <ToastProvider>
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-[#F5F5DC] text-black">
         {/* Sidebar Navigation */}
-        <aside className="fixed left-0 top-0 h-full w-64 bg-black/40 backdrop-blur-sm text-white border-r border-white/10">
-          <div className="p-6 border-b border-white/10">
-            <h1 className="text-xl font-thin text-white tracking-tight">
+        <aside className="fixed left-0 top-0 h-full w-64 bg-[#F5F5DC] text-black border-r border-black/10">
+          <div className="p-6 border-b border-black/10">
+            <h1 className="text-xl font-semibold text-black tracking-tight">
               Qudrat Academy
             </h1>
-            <p className="text-xs font-light text-white/40 mt-2 tracking-wider uppercase">Admin Portal</p>
+            <p className="text-xs font-medium text-black/60 mt-2 tracking-wider uppercase">Admin Portal</p>
           </div>
           <nav className="p-4 space-y-1">
             <NavLink href="/dashboard" isActive={pathname === '/dashboard'}>
@@ -51,7 +51,7 @@ export default function DashboardLayout({
         </aside>
 
         {/* Main Content */}
-        <main className="ml-64 min-h-screen bg-black">{children}</main>
+        <main className="ml-64 min-h-screen bg-[#F5F5DC] text-black">{children}</main>
       </div>
     </ToastProvider>
   );
@@ -61,10 +61,10 @@ function NavLink({ href, children, isActive }: { href: string; children: React.R
   return (
     <Link
       href={href}
-      className={`flex items-center px-4 py-2.5 rounded-sm transition-all duration-300 font-light text-sm tracking-wide ${
+      className={`flex items-center px-4 py-2.5 rounded-sm transition-all duration-300 font-medium text-sm tracking-wide ${
         isActive
-          ? 'bg-white/5 text-white border-l-2 border-white/30'
-          : 'text-white/60 hover:bg-white/5 hover:text-white/80 border-l-2 border-transparent'
+          ? 'bg-black/5 text-black border-l-2 border-black/30'
+          : 'text-black/70 hover:bg-black/5 hover:text-black border-l-2 border-transparent'
       }`}
     >
       {children}
