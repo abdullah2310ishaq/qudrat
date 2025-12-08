@@ -1,7 +1,12 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+// Ensure we always use the latest schema (avoid stale enum caches)
+if (mongoose.models.Prompt) {
+  delete mongoose.models.Prompt;
+}
+
 export interface IPrompt extends Document {
-  category: 'basic_applications' | 'productivity' | 'sales' | 'ecommerce' | 'investing' | 'web_dev' | 'customer_support' | 'cro' | 'daily_life' | 'tech' | 'education';
+  category: string; // Admin-defined, free text
   application?: string; // Optional sub-category/application name (e.g., "Leveraging Customer Data Analytics")
   prompt: string;
   tool: string; // ChatGPT, MidJourney, DALL-E, Jasper AI, etc.
@@ -17,20 +22,8 @@ const PromptSchema = new Schema<IPrompt>(
   {
     category: {
       type: String,
-      enum: [
-        'basic_applications',
-        'productivity',
-        'sales',
-        'ecommerce',
-        'investing',
-        'web_dev',
-        'customer_support',
-        'cro',
-        'daily_life',
-        'tech',
-        'education',
-      ],
       required: true,
+      trim: true,
     },
     application: {
       type: String,
