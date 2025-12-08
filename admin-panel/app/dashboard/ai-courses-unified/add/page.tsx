@@ -184,7 +184,11 @@ export default function AddAICoursePage() {
   const handleCreateCourse = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (aiToolTags.length === 0) {
+    // Treat whatever is typed as a pending tag so users don't have to hit Enter
+    const pendingTag = aiToolInput.trim();
+    const tags = pendingTag && !aiToolTags.includes(pendingTag) ? [...aiToolTags, pendingTag] : aiToolTags;
+
+    if (tags.length === 0) {
       toast.error('⚠️ Please add at least one AI Tool type');
       return;
     }
@@ -206,8 +210,8 @@ export default function AddAICoursePage() {
     const createToastId = toast.loading('Creating AI course and lessons...');
     try {
       // Use first AI tool tag as primary aiTool, join others as category
-      const aiTool = aiToolTags[0];
-      const category = aiToolTags.slice(1).join(', ') || courseForm.category || undefined;
+      const aiTool = tags[0];
+      const category = tags.slice(1).join(', ') || courseForm.category || undefined;
 
       // First, create the AI course with empty lesson arrays
       const courseRes = await fetch('/api/aiCourses', {
@@ -689,7 +693,11 @@ export default function AddAICoursePage() {
             <div className="flex gap-2 pt-3 border-t border-black/10">
               <button
                 type="submit"
-                disabled={saving || aiToolTags.length === 0 || courseForm.tree.length === 0}
+                disabled={
+                  saving ||
+                  (aiToolTags.length === 0 && aiToolInput.trim() === '') ||
+                  courseForm.tree.length === 0
+                }
                 className="flex-1 px-3 py-1.5 bg-black text-white rounded hover:bg-black/90 transition-all font-semibold text-xs disabled:opacity-50"
               >
                 {saving ? '⏳ Creating...' : '✅ Create AI Course'}

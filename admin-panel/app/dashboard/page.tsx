@@ -57,81 +57,53 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-black">
+    <div className="min-h-screen p-6" style={{ backgroundColor: '#F5F5DC' }}>
       <div className="max-w-7xl mx-auto">
-        <div className="mb-12">
-          <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">
-            Dashboard
-          </h1>
-          <div className="w-16 h-px bg-white/20 mb-4"></div>
-          <p className="text-sm font-light text-white/60 tracking-wide">Welcome back! Here's what's happening today.</p>
+        <div className="mb-6">
+          <h1 className="text-xl font-bold text-black mb-1">Dashboard</h1>
+          <p className="text-sm text-black/70">Quick overview and shortcuts to the unified flows.</p>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border border-white/20 border-t-white/60"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-4 border-black/20 border-t-black"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12">
-            <StatCard 
-              title="Courses" 
-              value={stats.courses} 
-              link="/dashboard/courses"
-              icon="📚"
-            />
-            <StatCard 
-              title="Lessons" 
-              value={stats.lessons} 
-              link="/dashboard/lessons"
-              icon="📖"
-            />
-            <StatCard 
-              title="Challenges" 
-              value={stats.challenges} 
-              link="/dashboard/challenges"
-              icon="🎯"
-            />
-            <StatCard 
-              title="Prompts" 
-              value={stats.prompts} 
-              link="/dashboard/prompts"
-              icon="💡"
-            />
-            <StatCard 
-              title="Users" 
-              value={stats.users} 
-              link="/dashboard/users"
-              icon="👥"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+            <StatCard title="Courses" value={stats.courses} link="/dashboard/courses-unified" icon="📚" />
+            <StatCard title="Lessons" value={stats.lessons} link="/dashboard/courses-unified" icon="📖" />
+            <StatCard title="Challenges" value={stats.challenges} link="/dashboard/challenges-unified" icon="🎯" />
+            <StatCard title="Prompts" value={stats.prompts} link="/dashboard/prompts-unified" icon="💡" />
+            <StatCard title="Users" value={stats.users} link="/dashboard/users" icon="👥" />
           </div>
         )}
 
-        <div className="bg-black/40 rounded-sm border border-white/10 p-8">
-          <h2 className="text-xl font-light text-white mb-8 tracking-wide">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white rounded border border-black/15 p-5 shadow-sm">
+          <h2 className="text-base font-bold text-black mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <Link
-              href="/dashboard/courses/new"
-              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
+              href="/dashboard/courses-unified/add-course"
+              className="group relative overflow-hidden bg-[#F5F5DC] border border-black/15 rounded p-4 hover:bg-black/5 transition-all duration-200 text-center"
             >
-              <div className="text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity">📚</div>
-              <div className="font-light text-white text-sm mb-1 tracking-wide">Create New Course</div>
-              <div className="text-xs font-light text-white/50 tracking-wider uppercase">Add a new learning course</div>
+              <div className="text-3xl mb-2">📚</div>
+              <div className="font-semibold text-black text-sm mb-1">Create New Course</div>
+              <div className="text-xs text-black/60">Add a course in the unified flow</div>
             </Link>
             <Link
-              href="/dashboard/challenges/new"
-              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
+              href="/dashboard/challenges-unified/add"
+              className="group relative overflow-hidden bg-[#F5F5DC] border border-black/15 rounded p-4 hover:bg-black/5 transition-all duration-200 text-center"
             >
-              <div className="text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity">🎯</div>
-              <div className="font-light text-white text-sm mb-1 tracking-wide">Create Challenge</div>
-              <div className="text-xs font-light text-white/50 tracking-wider uppercase">Start a new challenge</div>
+              <div className="text-3xl mb-2">🎯</div>
+              <div className="font-semibold text-black text-sm mb-1">Create Challenge</div>
+              <div className="text-xs text-black/60">Start a new challenge</div>
             </Link>
             <Link
-              href="/dashboard/prompts/new"
-              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-center"
+              href="/dashboard/prompts-unified/add"
+              className="group relative overflow-hidden bg-[#F5F5DC] border border-black/15 rounded p-4 hover:bg-black/5 transition-all duration-200 text-center"
             >
-              <div className="text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity">💡</div>
-              <div className="font-light text-white text-sm mb-1 tracking-wide">Add Prompt</div>
-              <div className="text-xs font-light text-white/50 tracking-wider uppercase">Add to prompt library</div>
+              <div className="text-3xl mb-2">💡</div>
+              <div className="font-semibold text-black text-sm mb-1">Add Prompt</div>
+              <div className="text-xs text-black/60">Add to prompt library</div>
             </Link>
           </div>
         </div>
@@ -143,13 +115,11 @@ export default function Dashboard() {
 function StatCard({ title, value, link, icon }: { title: string; value: number; link: string; icon: string }) {
   return (
     <Link href={link}>
-      <div className="group relative overflow-hidden bg-black/40 rounded-sm border border-white/10 hover:border-white/20 transition-all duration-300 p-6 cursor-pointer">
+      <div className="group relative overflow-hidden bg-white rounded border border-black/15 hover:border-black/30 transition-all duration-200 p-4 cursor-pointer shadow-sm">
         <div className="relative">
-          <div className="flex items-center justify-between mb-4">
-            <div className="text-2xl opacity-70 group-hover:opacity-100 transition-opacity">{icon}</div>
-          </div>
-          <div className="text-xs font-light text-white/60 mb-2 tracking-wider uppercase">{title}</div>
-          <div className="text-3xl font-thin text-white">
+          <div className="text-2xl mb-2">{icon}</div>
+          <div className="text-xs font-semibold text-black/70 mb-1 uppercase">{title}</div>
+          <div className="text-2xl font-bold text-black">
             {value}
           </div>
         </div>

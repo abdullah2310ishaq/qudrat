@@ -57,7 +57,12 @@ export default function EditLessonPage() {
       const data = await res.json();
       if (data.success) {
         const lesson = data.data;
-        setCourseId(lesson.courseId || '');
+        // Normalize courseId to a string to avoid passing objects to <Link>
+        const normalizedCourseId =
+          typeof lesson.courseId === 'string'
+            ? lesson.courseId
+            : lesson.courseId?._id || lesson.courseId?.toString?.() || '';
+        setCourseId(normalizedCourseId);
         setLessonForm({
           title: lesson.title || '',
           content: lesson.content || '',
